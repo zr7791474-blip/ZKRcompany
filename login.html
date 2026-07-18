@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Login | ZKRCompany</title>
+
+<link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+<body>
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <form
+            action="backend/login.php"
+            method="POST"
+            class="contact-form"
+        >
+
+            <h2>Admin Login</h2>
+
+            <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                required
+            >
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+            >
+
+            <button class="btn" type="submit">
+                Login
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+</body>
+</html>
