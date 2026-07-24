@@ -10,16 +10,16 @@ const siteUrl = "https://zkrcompany.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "ZKR — Digital Solutions Studio",
+    default: "ZKR — Independent Web Developer",
     template: "%s | ZKR",
   },
   description:
-    "ZKR is a digital solutions studio building websites, products, brands, and growth strategy for ambitious businesses.",
+    "ZKR is an independent developer building websites, dashboards, and product interfaces for businesses and founders.",
   keywords: [
     "web development",
     "web design agency",
     "UI UX design",
-    "branding studio",
+    "portfolio website",
     "SEO",
     "digital marketing",
     "Next.js development",
@@ -28,17 +28,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "ZKR — Digital Solutions Studio",
+    title: "ZKR — Independent Web Developer",
     description:
-      "Websites, products, brands, and growth strategy for ambitious businesses.",
+      "Websites, dashboards, and product interfaces for businesses and founders.",
     siteName: "ZKR",
     images: [{ url: "/zkr.jpg", width: 512, height: 512, alt: "ZKR Company logo" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ZKR — Digital Solutions Studio",
+    title: "ZKR — Independent Web Developer",
     description:
-      "Websites, products, brands, and growth strategy for ambitious businesses.",
+      "Websites, dashboards, and product interfaces for businesses and founders.",
     site: "@Zkr_ad",
     images: ["/zkr.jpg"],
   },

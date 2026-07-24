@@ -45,8 +45,8 @@ export function Contact({ hideHeading = false }: { hideHeading?: boolean } = {})
             {!hideHeading && (
               <SectionHeading
                 eyebrow="Contact"
-                title="Tell us about your project."
-                description="Fill out the form or reach us directly — we typically reply within one business day."
+                title="Tell me about your project."
+                description="Fill out the form or reach me directly — I typically reply within one business day."
               />
             )}
 

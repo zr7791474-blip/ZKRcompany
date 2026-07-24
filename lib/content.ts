@@ -1,11 +1,11 @@
 export const site = {
   name: "ZKR",
-  fullName: "ZKR Company",
-  tagline: "Digital Solutions Studio",
+  fullName: "ZKR",
+  tagline: "Independent Web Developer",
   email: "zr7791474@gmail.com",
   whatsapp: "https://wa.me/212657516301",
   twitter: "https://x.com/Zkr_ad",
-  location: "Casablanca, Morocco — working with clients worldwide",
+  location: "Casablanca, Morocco — working remotely",
 };
 
 export const navLinks = [
@@ -17,11 +17,13 @@ export const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-export const stats = [
-  { value: 150, suffix: "+", label: "Projects shipped" },
-  { value: 80, suffix: "+", label: "Businesses served" },
-  { value: 5, suffix: "+", label: "Years building" },
-  { value: 24, suffix: "/7", label: "Support on call" },
+// No invented numbers here on purpose — these are honest, qualitative
+// signals rather than fabricated stats like "150+ projects shipped".
+export const highlights = [
+  { label: "Independent developer" },
+  { label: "Design to deployment" },
+  { label: "Remote & async-friendly" },
+  { label: "Open to new projects" },
 ];
 
 export const services = [
@@ -57,27 +59,27 @@ export const services = [
 
 export const whyUs = [
   {
-    title: "Senior team, every project",
-    description: "No hand-offs to juniors mid-build — the people who scope your project ship it.",
+    title: "You work directly with me",
+    description: "No account managers, no hand-offs — the person who scopes your project is the one who builds it.",
   },
   {
     title: "Fixed scope, fixed price",
-    description: "You know the cost and timeline before we write a line of code.",
+    description: "You know the cost and timeline before I write a line of code.",
   },
   {
     title: "Built to perform",
-    description: "Every site we ship is benchmarked for speed, SEO, and accessibility before launch.",
+    description: "Every project is checked for speed, SEO, and accessibility before it ships.",
   },
   {
-    title: "Support that answers",
-    description: "Direct line to your team after launch — no ticket queues.",
+    title: "A direct line after launch",
+    description: "Questions after launch go straight to me — no ticket queue, no support tiers.",
   },
 ];
 
 export const process = [
   {
     step: "Discover",
-    description: "We dig into your business, your users, and what success actually looks like.",
+    description: "I dig into your goals, your users, and what success actually looks like.",
   },
   {
     step: "Design",
@@ -93,7 +95,7 @@ export const process = [
   },
   {
     step: "Grow",
-    description: "Ongoing SEO, iteration, and support to keep compounding results.",
+    description: "Ongoing iteration and support as your needs change.",
   },
 ];
 
@@ -112,65 +114,62 @@ export const technologies = [
   "GraphQL",
 ];
 
+// Project case studies. These are personal/concept builds, not client work —
+// status is labeled honestly and there are no fabricated results or client
+// names attached. Add `liveUrl` / `githubUrl` per project once they exist;
+// the card only shows a button when a link is actually present.
 export const work = [
   {
     title: "Atlas Freight",
     category: "Logistics · Web Platform",
-    description: "Real-time shipment tracking dashboard replacing a decade-old internal tool.",
-    metric: "+38% faster dispatch",
+    status: "Personal Project",
+    description: "A real-time shipment tracking dashboard concept for logistics teams.",
+    problem: "Spreadsheet-based tracking makes it hard to see shipment status at a glance.",
+    built: "A live dashboard that surfaces shipment status, delays, and dispatch load in one view.",
+    tech: ["Next.js", "TypeScript", "PostgreSQL", "Tailwind CSS"],
+    features: ["Live status board", "Filterable dispatch view", "Role-based access"],
+    liveUrl: null,
+    githubUrl: null,
     color: "from-ember-500 to-amber-glow",
   },
   {
     title: "Nour & Co.",
     category: "Retail · E-commerce",
-    description: "Headless storefront rebuild focused on checkout speed and mobile conversion.",
-    metric: "+52% mobile conversion",
+    status: "Concept Project",
+    description: "A headless storefront concept built around checkout speed on mobile.",
+    problem: "Traditional storefronts often ship slow, image-heavy checkout flows on mobile.",
+    built: "A headless storefront with a lightweight, mobile-first checkout flow.",
+    tech: ["Next.js", "TypeScript", "Stripe", "Tailwind CSS"],
+    features: ["Headless product catalog", "Streamlined checkout", "Mobile-first layout"],
+    liveUrl: null,
+    githubUrl: null,
     color: "from-moss-400 to-moss-600",
   },
   {
     title: "Meridian Health",
     category: "Healthcare · Brand + Web",
-    description: "Full rebrand and patient-facing site for a growing clinic network.",
-    metric: "3x organic traffic",
+    status: "Concept Project",
+    description: "A rebrand and patient-facing site concept for a clinic network.",
+    problem: "Healthcare sites often bury the one thing visitors want: how to book an appointment.",
+    built: "A patient-facing site with clear service pages and a simple booking path.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS"],
+    features: ["Service directory", "Appointment request flow", "Accessible design"],
+    liveUrl: null,
+    githubUrl: null,
     color: "from-amber-glow to-ember-600",
   },
   {
     title: "Fielder",
     category: "SaaS · Product Design",
-    description: "Design system and product UI for a field-service scheduling tool.",
-    metric: "-60% support tickets",
+    status: "Personal Project",
+    description: "A design system and product UI concept for a field-service scheduling tool.",
+    problem: "Scheduling tools for field teams often feel cluttered and inconsistent across screens.",
+    built: "A component-based design system plus core scheduling and dispatch screens.",
+    tech: ["React", "TypeScript", "Figma", "Storybook"],
+    features: ["Reusable component library", "Calendar & dispatch views", "Dark mode support"],
+    liveUrl: null,
+    githubUrl: null,
     color: "from-moss-300 to-moss-500",
-  },
-];
-
-export const testimonials = [
-  {
-    quote:
-      "Outstanding communication from the first call to the day we launched. They understood exactly what we needed.",
-    name: "Sarah Meunier",
-    role: "Founder, Nour & Co.",
-    rating: 5,
-  },
-  {
-    quote:
-      "Our organic traffic and conversion rate both jumped within two months of the new site going live.",
-    name: "Ahmed Belkadi",
-    role: "Marketing Lead, Atlas Freight",
-    rating: 5,
-  },
-  {
-    quote:
-      "Professional, fast, and genuinely invested in the outcome — not just the deliverable.",
-    name: "David Kim",
-    role: "COO, Meridian Health",
-    rating: 5,
-  },
-  {
-    quote:
-      "They rebuilt our design system and it's the first time engineering and design have actually agreed on anything.",
-    name: "Laila Haddad",
-    role: "Product Manager, Fielder",
-    rating: 5,
   },
 ];
 
@@ -213,8 +212,8 @@ export const pricing = [
       "Web app / product build",
       "Design system",
       "API & database architecture",
-      "Ongoing SEO & support",
-      "Dedicated senior team",
+      "Ongoing support & iteration",
+      "Direct access to me, no middlemen",
     ],
     popular: false,
   },
@@ -224,27 +223,27 @@ export const faqs = [
   {
     question: "How long does a typical project take?",
     answer:
-      "Marketing sites usually take 2–4 weeks. Full product builds vary based on scope, but we agree on a timeline before kickoff and stick to it.",
+      "Marketing sites usually take 2–4 weeks. Full product builds vary based on scope, but I agree on a timeline with you before kickoff and stick to it.",
   },
   {
-    question: "Do you work with businesses outside Morocco?",
+    question: "Do you work with clients outside Morocco?",
     answer:
-      "Yes — we work with clients across time zones and run projects fully remote, with regular calls and async updates in a shared channel.",
+      "Yes — I work with clients across time zones, fully remote, with regular calls and async updates in a shared channel.",
   },
   {
-    question: "What do you need from us to get started?",
+    question: "What do you need from me to get started?",
     answer:
-      "A short discovery call, your goals, and any brand assets you already have. We'll fill in the rest during the Discover phase.",
+      "A short discovery call, your goals, and any brand assets you already have. I'll fill in the rest during the Discover phase.",
   },
   {
-    question: "Can you work with our existing codebase?",
+    question: "Can you work with my existing codebase?",
     answer:
-      "Often, yes. We'll review your stack during discovery and tell you honestly whether extending it or rebuilding makes more sense.",
+      "Often, yes. I'll review your stack during discovery and tell you honestly whether extending it or rebuilding makes more sense.",
   },
   {
     question: "What happens after launch?",
     answer:
-      "You get documentation, a walkthrough, and a direct line to the team. Ongoing support and SEO retainers are available if you want us to keep iterating.",
+      "You get documentation, a walkthrough, and a direct line to me. Ongoing support is available if you want me to keep iterating.",
   },
 ];
 
@@ -253,7 +252,7 @@ export const faqs = [
 export const values = [
   {
     title: "Craft over speed",
-    description: "We'd rather ship two weeks later and have you proud of every pixel than rush something forgettable.",
+    description: "I'd rather ship two weeks later and have you proud of every pixel than rush something forgettable.",
   },
   {
     title: "Say the hard thing early",
@@ -261,20 +260,21 @@ export const values = [
   },
   {
     title: "Own the outcome",
-    description: "We measure success by your metrics, not the number of deliverables we handed off.",
+    description: "I measure success by your metrics, not the number of deliverables I handed off.",
   },
   {
     title: "Stay teachable",
-    description: "The stack changes every year. We budget real time to learn instead of coasting on what worked in 2022.",
+    description: "The stack changes every year. I budget real time to learn instead of coasting on what worked in 2022.",
   },
 ];
 
-export const team = [
-  { name: "Zineb Kabbaj", role: "Founder & Creative Director", focus: "Brand & product design" },
-  { name: "Rachid Amrani", role: "Lead Engineer", focus: "Web architecture & performance" },
-  { name: "Yasmine Rifi", role: "UI/UX Designer", focus: "Product design systems" },
-  { name: "Omar Idrissi", role: "Growth & SEO Lead", focus: "Technical SEO & analytics" },
-];
+// TODO: replace with your real name, role, and focus areas — this is a
+// placeholder so the About page renders something honest until you fill it in.
+export const founder = {
+  name: "Add your name",
+  role: "Independent Developer",
+  focus: "Full-stack web development, from design to deployment",
+};
 
 export const serviceDetails = [
   {
@@ -379,12 +379,12 @@ export const serviceDetails = [
 ];
 
 export const processFull = [
-  { step: "Discovery", description: "We learn your business, your users, your constraints, and what success has to look like." },
-  { step: "Strategy", description: "We turn discovery into a scoped plan — sitemap, tech approach, timeline, and a fixed estimate." },
+  { step: "Discovery", description: "I learn your business, your users, your constraints, and what success has to look like." },
+  { step: "Strategy", description: "I turn discovery into a scoped plan — sitemap, tech approach, timeline, and a fixed estimate." },
   { step: "Design", description: "Wireframes to high-fidelity design, reviewed with you at every checkpoint, not just at the end." },
   { step: "Development", description: "Clean, tested code built in the open — you get staging access from week one." },
   { step: "Testing", description: "Cross-browser, cross-device QA, performance benchmarking, and accessibility checks before anything ships." },
-  { step: "Launch", description: "Deployed, monitored, and handed off with documentation that your team can actually follow." },
+  { step: "Launch", description: "Deployed, monitored, and handed off with documentation that actually makes sense." },
   { step: "Growth", description: "Ongoing SEO, iteration, and support so the site keeps compounding after day one." },
 ];
 
@@ -412,29 +412,53 @@ export const workAll = [
   {
     title: "Loop Studio",
     category: "Creative · Portfolio Site",
-    description: "Motion-driven portfolio for an independent design studio, built for fast client handoff.",
-    metric: "+70% inquiry rate",
+    status: "Concept Project",
+    description: "A motion-driven portfolio concept for an independent design studio.",
+    problem: "Portfolio sites often show static screenshots that undersell the actual product motion.",
+    built: "A portfolio template with scroll-based reveals and project pages built for fast handoff.",
+    tech: ["Next.js", "Framer Motion", "Tailwind CSS"],
+    features: ["Scroll-driven reveals", "Reusable case-study template", "Fast client handoff"],
+    liveUrl: null,
+    githubUrl: null,
     color: "from-ember-600 to-ember-400",
   },
   {
     title: "Harvest Table",
     category: "Hospitality · Booking Platform",
-    description: "Reservation and events platform for a restaurant group across 6 locations.",
-    metric: "4.2k bookings / month",
+    status: "Concept Project",
+    description: "A reservation and events platform concept for a multi-location restaurant group.",
+    problem: "Coordinating bookings across multiple locations by phone doesn't scale.",
+    built: "A booking platform with per-location availability and an events calendar.",
+    tech: ["Next.js", "TypeScript", "PostgreSQL", "Prisma"],
+    features: ["Multi-location availability", "Events calendar", "Booking confirmations"],
+    liveUrl: null,
+    githubUrl: null,
     color: "from-moss-500 to-moss-300",
   },
   {
     title: "Northline Legal",
     category: "Professional Services · Web",
-    description: "Full site rebuild and case-intake funnel for a growing law practice.",
-    metric: "+44% consult requests",
+    status: "Concept Project",
+    description: "A site rebuild and case-intake funnel concept for a law practice.",
+    problem: "Prospective clients often bounce off a contact form with no sense of next steps.",
+    built: "A marketing site with a guided case-intake funnel instead of a bare contact form.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS"],
+    features: ["Guided intake funnel", "Practice-area pages", "Clear next-step messaging"],
+    liveUrl: null,
+    githubUrl: null,
     color: "from-amber-glow to-moss-400",
   },
   {
     title: "Pulse Analytics",
     category: "SaaS · AI Feature",
-    description: "Retrieval-based in-app search and support assistant built on the client's product data.",
-    metric: "-45% support load",
+    status: "Experimental Project",
+    description: "A retrieval-based in-app search and support assistant, built as a product feature experiment.",
+    problem: "In-app search often can't answer support-style questions, only find pages.",
+    built: "A retrieval-augmented assistant that answers questions from a product's own docs and data.",
+    tech: ["TypeScript", "Node.js", "Vector search", "OpenAI API"],
+    features: ["Retrieval-augmented answers", "In-app search UI", "Source citations"],
+    liveUrl: null,
+    githubUrl: null,
     color: "from-ember-500 to-moss-500",
   },
 ];
@@ -451,45 +475,13 @@ export const workCategories = [
   "AI Feature",
 ];
 
-export const cultureValues = [
-  { title: "Remote-first", description: "Work from anywhere — we run on async updates and a handful of overlapping hours." },
-  { title: "Senior from day one", description: "No bench, no busywork. You're on real client work within your first two weeks." },
-  { title: "Small by design", description: "A small team means your work is visible — no getting lost in a 200-person org chart." },
-];
-
-export const benefits = [
-  "Flexible hours around core overlap time",
-  "Learning budget for courses, books, and conferences",
-  "Paid time off that people actually take",
-  "Latest hardware, your choice of setup",
-  "Profit-linked bonuses on completed projects",
-];
-
-export const openRoles = [
-  {
-    title: "Senior Frontend Engineer",
-    type: "Full-time · Remote",
-    description: "React/Next.js focus — you'll own feature builds across client projects and our internal tooling.",
-  },
-  {
-    title: "Product Designer",
-    type: "Full-time · Remote",
-    description: "End-to-end design across web and product work, from research to high-fidelity handoff.",
-  },
-  {
-    title: "SEO & Growth Specialist",
-    type: "Contract · Remote",
-    description: "Own technical SEO and content strategy across our client portfolio.",
-  },
-];
-
 export const blogPosts = [
   {
     slug: "why-most-redesigns-fail",
     title: "Why most website redesigns fail (and how to avoid it)",
     category: "Strategy",
     excerpt:
-      "A redesign that changes how a site looks but not how it performs against your goals isn't a redesign — it's a paint job. Here's how we scope engagements to avoid that trap.",
+      "A redesign that changes how a site looks but not how it performs against your goals isn't a redesign — it's a paint job. Here's how I scope engagements to avoid that trap.",
     date: "June 2026",
     readTime: "6 min read",
   },
@@ -498,7 +490,7 @@ export const blogPosts = [
     title: "The Core Web Vitals that actually move conversion",
     category: "Engineering",
     excerpt:
-      "Not every performance metric affects revenue equally. We break down which numbers to chase first when speed is on a tight budget.",
+      "Not every performance metric affects revenue equally. Here's a breakdown of which numbers to chase first when speed is on a tight budget.",
     date: "May 2026",
     readTime: "5 min read",
   },
@@ -522,10 +514,10 @@ export const blogPosts = [
   },
   {
     slug: "pricing-fixed-scope",
-    title: "Why we quote fixed scope instead of hourly",
+    title: "Why I quote fixed scope instead of hourly",
     category: "Studio",
     excerpt:
-      "Hourly billing rewards slow work. Here's how fixed-scope pricing changes the incentives for both sides of a project.",
+      "Hourly billing rewards slow work. Here's why I quote fixed scope instead, and how it changes the incentives for both sides of a project.",
     date: "February 2026",
     readTime: "5 min read",
   },
@@ -534,7 +526,7 @@ export const blogPosts = [
     title: "The AI features actually worth shipping in 2026",
     category: "AI",
     excerpt:
-      "Most 'AI-powered' features are a chatbot bolted onto a sidebar. We look at where retrieval and automation genuinely save users time.",
+      "Most 'AI-powered' features are a chatbot bolted onto a sidebar. This is a look at where retrieval and automation genuinely save users time.",
     date: "January 2026",
     readTime: "6 min read",
   },

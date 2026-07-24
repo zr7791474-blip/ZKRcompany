@@ -30,7 +30,7 @@ export default function ServicesPage() {
       <PageHero
         eyebrow="Services"
         title="Nine disciplines. One accountable team."
-        description="No hand-offs between vendors — the team that scopes your project designs, builds, and ships it."
+        description="No hand-offs between vendors — the person who scopes your project designs, builds, and ships it."
       />
 
       <section className="pb-28 sm:pb-36">

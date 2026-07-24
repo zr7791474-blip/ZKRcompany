@@ -16,7 +16,7 @@ export function Services() {
         <SectionHeading
           eyebrow="Services"
           title="Everything a growing business needs, under one roof."
-          description="We don't hand you off between vendors. One team, one accountable roadmap, from first sketch to shipped product."
+          description="No hand-offs between vendors. One person, one accountable roadmap, from first sketch to shipped product."
         />
 
         <RevealGroup className="mt-16 grid gap-5 sm:grid-cols-2" stagger={0.1}>

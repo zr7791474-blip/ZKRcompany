@@ -6,13 +6,12 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowUpRight, Code2, Palette, TrendingUp } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
-import { stats } from "@/lib/content";
+import { highlights } from "@/lib/content";
 
 const floatingCards = [
   { icon: Code2, label: "Web Development", offset: "left-[2%] top-[18%]", delay: 0 },
   { icon: Palette, label: "UI / UX Design", offset: "right-[0%] top-[8%]", delay: 0.15 },
-  { icon: TrendingUp, label: "+38% Growth", offset: "right-[4%] bottom-[10%]", delay: 0.3 },
+  { icon: TrendingUp, label: "Performance-first", offset: "right-[4%] bottom-[10%]", delay: 0.3 },
 ];
 
 export function Hero() {
@@ -95,7 +94,7 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-glow opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber-glow" />
             </span>
-            Booking projects for Q4 2026
+            Available for new projects
           </motion.div>
 
           <motion.h1
@@ -104,11 +103,11 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="mt-8 max-w-4xl font-display text-[2.6rem] font-semibold leading-[1.04] text-balance text-white sm:text-6xl lg:text-7xl"
           >
-            ZKR Company builds digital
+I'm ZKR — a developer who builds
             <br />
             <span className="relative inline-block">
               <span className="bg-gradient-to-r from-ember-400 to-amber-glow bg-clip-text text-transparent">
-                products that grow your business
+                fast, well-built web products
               </span>
             </span>
           </motion.h1>
@@ -119,9 +118,9 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.28 }}
             className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-white/70"
           >
-            ZKR is a digital solutions studio — we design, build, and grow
-            websites and products for businesses that want more than a
-            template.
+            I design and build websites, dashboards, and product interfaces
+            for small businesses and founders who want something sharper than
+            a template — end to end, with no hand-offs along the way.
           </motion.p>
 
           <motion.div
@@ -184,15 +183,15 @@ export function Hero() {
             />
           </motion.div>
 
-          {/* Stats */}
-          <div className="mt-20 grid w-full max-w-3xl grid-cols-2 gap-8 border-t border-white/15 pt-10 sm:grid-cols-4">
-            {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="font-display text-3xl font-semibold text-white sm:text-4xl">
-                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                </div>
-                <p className="mt-1 text-xs text-white/50 sm:text-sm">{stat.label}</p>
-              </div>
+          {/* Highlights — honest, qualitative signals rather than invented numbers */}
+          <div className="mt-20 flex w-full max-w-3xl flex-wrap items-center justify-center gap-3 border-t border-white/15 pt-10">
+            {highlights.map((h) => (
+              <span
+                key={h.label}
+                className="rounded-full border border-white/15 bg-white/5 px-4 py-2 font-mono text-xs text-white/60"
+              >
+                {h.label}
+              </span>
             ))}
           </div>
         </div>

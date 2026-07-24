@@ -13,9 +13,9 @@ export default function TechnologiesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Our Stack"
+        eyebrow="My Stack"
         title="Modern tools, chosen for the job."
-        description="We pick technology based on what your project actually needs — not what's trending this quarter."
+        description="I pick technology based on what your project actually needs — not what's trending this quarter."
       />
 
       <section className="pb-28 sm:pb-36">

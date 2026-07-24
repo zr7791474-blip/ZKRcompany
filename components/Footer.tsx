@@ -63,7 +63,7 @@ export function Footer() {
             Ready to build something that grows?
           </h2>
           <p className="max-w-lg text-white/60">
-            Tell us about your project — we&apos;ll reply within one business day with next steps.
+            Tell me about your project — I&apos;ll reply within one business day with next steps.
           </p>
           <MagneticButton href="/contact" className="bg-white text-ink-950 hover:bg-amber-glow">
             Start your project
@@ -74,7 +74,7 @@ export function Footer() {
           <div>
             <Logo size={34} showWordmark className="text-white" wordmarkClassName="text-white text-lg" />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/50">
-              A digital solutions studio building websites, products, and brands for businesses
+              An independent developer building websites, dashboards, and product interfaces for businesses and founders
               that want more than a template.
             </p>
 

@@ -16,7 +16,7 @@ export default function ProcessPage() {
   return (
     <>
       <PageHero
-        eyebrow="How We Work"
+        eyebrow="How I Work"
         title="Seven stages. Zero surprises."
         description="Every engagement follows the same structure, so you always know what's happening and what's next."
       />
@@ -45,7 +45,7 @@ export default function ProcessPage() {
               Ready to start Discovery?
             </h3>
             <p className="max-w-md text-ink-500 dark:text-white/60">
-              A short call is all it takes to find out if we&apos;re the right fit for your project.
+              A short call is all it takes to find out if I&apos;m the right fit for your project.
             </p>
             <MagneticButton href="/contact" icon={<ArrowUpRight className="h-4 w-4" />}>
               Book a discovery call

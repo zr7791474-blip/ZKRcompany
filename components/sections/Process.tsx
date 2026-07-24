@@ -11,7 +11,7 @@ export function Process() {
     <section id="process" className="relative bg-mist-100 py-28 sm:py-36 dark:bg-white/[0.02]">
       <Container>
         <SectionHeading
-          eyebrow="How we work"
+          eyebrow="How I work"
           title="A process built to remove surprises."
           description="Five stages, one team, full visibility from kickoff to launch and beyond."
           align="center"
