@@ -1,12 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { process } from "@/lib/content";
 
 export function Process() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section id="process" className="relative bg-mist-100 py-28 sm:py-36 dark:bg-white/[0.02]">
       <Container>
@@ -22,9 +24,10 @@ export function Process() {
           <div className="absolute left-0 right-0 top-6 hidden h-px bg-ink-950/10 lg:block dark:bg-white/10" />
           <motion.div
             className="absolute left-0 top-6 hidden h-px bg-gradient-to-r from-ember-500 via-amber-glow to-moss-400 lg:block"
-            initial={{ width: "0%" }}
-            whileInView={{ width: "100%" }}
-            viewport={{ once: true }}
+            initial={{ width: reduceMotion ? "100%" : "0%" }}
+            whileInView={reduceMotion ? undefined : { width: "100%" }}
+            animate={reduceMotion ? { width: "100%" } : undefined}
+            viewport={{ once: true, margin: "0px 0px 200px 0px" }}
             transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
           />
 

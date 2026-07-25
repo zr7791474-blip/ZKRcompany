@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /**
@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
  * background, and in the footer. Draws itself in on scroll.
  */
 export function GrowthLine({ className, flip = false }: { className?: string; flip?: boolean }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <div className={cn("relative w-full overflow-hidden", className)} aria-hidden>
       <svg
@@ -22,9 +24,10 @@ export function GrowthLine({ className, flip = false }: { className?: string; fl
           stroke="url(#growthGradient)"
           strokeWidth="2"
           strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ once: true }}
+          initial={{ pathLength: reduceMotion ? 1 : 0 }}
+          whileInView={reduceMotion ? undefined : { pathLength: 1 }}
+          animate={reduceMotion ? { pathLength: 1 } : undefined}
+          viewport={{ once: true, margin: "0px 0px 200px 0px" }}
           transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
         />
         <defs>
