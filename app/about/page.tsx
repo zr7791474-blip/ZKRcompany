@@ -28,13 +28,13 @@ export default function AboutPage() {
               <p className="font-display text-lg font-semibold text-ink-950 dark:text-white">My mission</p>
               <p className="mt-3 text-base leading-relaxed text-ink-500 dark:text-white/60">
                 Deliver reliable, honestly-priced digital work — and be straight with clients about
-                what's actually worth building.
+                what&apos;s actually worth building.
               </p>
             </Reveal>
             <Reveal delay={0.08} className="rounded-3xl border border-ink-950/8 bg-mist-100 p-8 dark:border-white/10 dark:bg-white/[0.03]">
               <p className="font-display text-lg font-semibold text-ink-950 dark:text-white">My approach</p>
               <p className="mt-3 text-base leading-relaxed text-ink-500 dark:text-white/60">
-                Craft, transparency, and following through on what I say I'll do — no matter the size
+                Craft, transparency, and following through on what I say I&apos;ll do — no matter the size
                 of the project.
               </p>
             </Reveal>

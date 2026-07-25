@@ -20,13 +20,13 @@ export function About() {
                 <p className="font-display text-sm font-semibold text-ink-950 dark:text-white">My mission</p>
                 <p className="mt-1.5 text-sm leading-relaxed text-ink-500 dark:text-white/60">
                   Deliver reliable, honestly-priced digital work — and be straight
-                  about what's actually worth building.
+                  about what&apos;s actually worth building.
                 </p>
               </div>
               <div className="rounded-2xl border border-ink-950/8 bg-mist-100 p-5 dark:border-white/10 dark:bg-white/5">
                 <p className="font-display text-sm font-semibold text-ink-950 dark:text-white">My approach</p>
                 <p className="mt-1.5 text-sm leading-relaxed text-ink-500 dark:text-white/60">
-                  Craft, transparency, and following through on what I say I'll do.
+                  Craft, transparency, and following through on what I say I&apos;ll do.
                 </p>
               </div>
               <a

@@ -103,7 +103,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="mt-8 max-w-4xl font-display text-[2.6rem] font-semibold leading-[1.04] text-balance text-white sm:text-6xl lg:text-7xl"
           >
-I'm ZKR — a developer who builds
+I&apos;m ZKR — a developer who builds
             <br />
             <span className="relative inline-block">
               <span className="bg-gradient-to-r from-ember-400 to-amber-glow bg-clip-text text-transparent">

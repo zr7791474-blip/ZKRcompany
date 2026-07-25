@@ -81,11 +81,26 @@ symbols. Check any component's imports for the full set in use.
 
 ## QA pass (latest)
 
-A full audit was run: `npm run build`, `npm run lint`, and `tsc --noEmit`
-all pass with zero errors. Every internal link/anchor was cross-referenced
-against real routes and real `id` attributes (no dead links). All 11 routes
-were smoke-tested for 200s, a genuinely invalid path was confirmed to 404,
-and the contact API was tested for both success and validation-rejection.
+`npm run build`, `npm run lint`, and `tsc --noEmit` all pass with zero
+errors as of this pass. Every internal link/anchor was cross-referenced
+against real routes and real `id` attributes (no dead links — verified the
+`/services#web`/`#design`/`#brand`/`#growth` footer anchors specifically,
+since those are easy to silently break). All 18 routes were smoke-tested,
+a genuinely invalid path was confirmed to 404, and both the contact and
+newsletter APIs were tested for success and validation-rejection.
+
+Two real issues were found and fixed in this pass:
+- `npm run lint` actually failed with 5 `react/no-unescaped-entities`
+  errors (unescaped apostrophes in `app/about/page.tsx`,
+  `components/sections/About.tsx`, `components/sections/Hero.tsx`) —
+  despite an earlier note claiming lint was clean. Fixed.
+- The footer newsletter signup was a **fake success state**: submitting it
+  set local React state to show "You're on the list" without ever sending
+  the email anywhere. Added a real `app/api/newsletter/route.ts` (same
+  honest pattern as the contact route below — validates and logs
+  server-side) and wired the form to it with real loading/error states.
+- `app/sitemap.ts` only listed the homepage — added all 10 other real
+  routes.
 
 Two real (not extension-noise) accessibility issues were found and fixed:
 - `ink-500` (secondary/body text color) was `#457B9D`, which only hit
@@ -132,6 +147,17 @@ database yet. Wire it up to:
 
 The admin login/dashboard from your original PHP project isn't reproduced
 here — that's a separate app concern outside a marketing site.
+
+## Newsletter signup — same situation
+
+The footer newsletter form (`app/api/newsletter/route.ts`) follows the exact
+same pattern: it validates the email and logs it server-side, but doesn't
+add it to a real mailing list yet. Wire it up to your ESP of choice
+(Mailchimp, Resend Audiences, ConvertKit, Beehiiv, etc.) before relying on
+it. This used to be a client-side-only fake (it showed a "You're on the
+list" success message without sending the email anywhere) — that's fixed
+now to at least be a real, honest request/response cycle, but it still
+needs a real ESP wired in to actually collect subscribers.
 
 ## Windows install issue — fixed
 

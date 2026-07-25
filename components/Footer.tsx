@@ -41,12 +41,37 @@ const columns = [
 export function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubscribe(e: React.FormEvent) {
+  async function handleSubscribe(e: React.FormEvent) {
     e.preventDefault();
-    if (!email) return;
-    setSubscribed(true);
-    setEmail("");
+    if (!email || isSubmitting) return;
+
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const json = await res.json();
+
+      if (!res.ok) {
+        setError(json.error ?? "Could not subscribe. Please try again.");
+        return;
+      }
+
+      setSubscribed(true);
+      setEmail("");
+    } catch {
+      setError("Could not subscribe. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   function scrollTop() {
@@ -95,7 +120,8 @@ export function Footer() {
                 <button
                   type="submit"
                   aria-label="Subscribe"
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-ink-950 transition-colors hover:bg-amber-glow"
+                  disabled={isSubmitting}
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-ink-950 transition-colors hover:bg-amber-glow disabled:opacity-60"
                 >
                   <Send className="h-3.5 w-3.5" />
                 </button>
@@ -107,6 +133,15 @@ export function Footer() {
                   className="mt-2 text-xs text-moss-300"
                 >
                   You&apos;re on the list.
+                </motion.p>
+              )}
+              {error && (
+                <motion.p
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-2 text-xs text-ember-400"
+                >
+                  {error}
                 </motion.p>
               )}
             </form>
