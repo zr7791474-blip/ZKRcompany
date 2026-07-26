@@ -3,23 +3,21 @@
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+// IMPORTANT: opacity is intentionally NOT animated here anymore. Content
+// must always be visible on first paint, full stop — no dependency on
+// scroll timing, IntersectionObserver firing in time, or a third-party
+// capture tool (e.g. Mockvid) rendering JS/animations the way a normal
+// browser does. Only a small, purely cosmetic vertical offset is animated,
+// so worst case (JS never runs at all) the content is still 100% visible,
+// just without the subtle slide-up polish.
 const variants: Variants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { y: 20 },
   show: {
-    opacity: 1,
     y: 0,
     transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
-// A generous, *positive* viewport margin so the reveal triggers well before
-// an element is actually visible on screen — this gives the animation time
-// to finish before a real (or automated/fast-scrolling) viewer ever sees it.
-// A negative margin here would do the opposite: delay the trigger until the
-// element is already deep in view, which is exactly what caused cards to
-// show up still invisible (stuck at opacity: 0) in fast automated scroll
-// captures (e.g. Mockvid) — the capture reached the card before the
-// animation had a chance to start.
 const VIEWPORT = { once: true, margin: "0px 0px 200px 0px" } as const;
 
 export function Reveal({
@@ -33,15 +31,8 @@ export function Reveal({
 }) {
   const reduceMotion = useReducedMotion();
 
-  // With reduced motion (real user preference, or an automated capture
-  // tool emulating it) skip the hidden phase entirely — render the final,
-  // fully-visible state immediately so content is never caught invisible.
   if (reduceMotion) {
-    return (
-      <motion.div className={cn(className)} initial="show" animate="show" variants={variants}>
-        {children}
-      </motion.div>
-    );
+    return <div className={cn(className)}>{children}</div>;
   }
 
   return (
@@ -75,10 +66,9 @@ export function RevealGroup({
   };
 
   if (reduceMotion) {
-    // Children rely on inheriting the "show" variant from this element via
-    // Framer Motion's context propagation (they only set `variants`, not
-    // their own initial/animate) — so this stays a motion.div, just pinned
-    // straight to "show" instead of animating in on scroll.
+    // Children only set `variants` (no initial/animate of their own) and
+    // rely on inheriting "show" from this element via Framer Motion's
+    // context propagation — so this stays a motion.div, pinned to "show".
     return (
       <motion.div className={cn(className)} initial="show" animate="show" variants={groupVariants}>
         {children}
