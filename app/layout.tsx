@@ -1,91 +1,68 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Loader } from "@/components/Loader";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { site } from "@/lib/content";
 
-const siteUrl = "https://zkrcompany.com";
+// Self-hosted via next/font: no third-party request, no render-blocking CSS, no layout shift.
+const display = localFont({
+  src: "./fonts/bricolage.woff2",
+  variable: "--font-display",
+  weight: "200 800",
+  display: "swap",
+});
+const sans = localFont({
+  src: "./fonts/instrument-sans.woff2",
+  variable: "--font-sans",
+  weight: "400 700",
+  display: "swap",
+});
+const mono = localFont({
+  src: [
+    { path: "./fonts/plex-mono-400.woff2", weight: "400" },
+    { path: "./fonts/plex-mono-500.woff2", weight: "500" },
+  ],
+  variable: "--font-mono",
+  display: "swap",
+});
+
+const description =
+  "ZKR is the independent studio of Zakariaa Adli. I design and build websites and digital products, working directly with each client.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: {
-    default: "ZKR — Independent Web Developer",
-    template: "%s | ZKR",
-  },
-  description:
-    "ZKR is an independent developer building websites, dashboards, and product interfaces for businesses and founders.",
-  keywords: [
-    "web development",
-    "web design agency",
-    "UI UX design",
-    "portfolio website",
-    "SEO",
-    "digital marketing",
-    "Next.js development",
-  ],
-  authors: [{ name: "ZKR Company" }],
+  metadataBase: new URL(site.url),
+  title: { default: site.identity, template: "%s | ZKR" },
+  description,
+  authors: [{ name: site.founder }],
   openGraph: {
     type: "website",
-    url: siteUrl,
-    title: "ZKR — Independent Web Developer",
-    description:
-      "Websites, dashboards, and product interfaces for businesses and founders.",
+    title: site.identity,
+    description,
     siteName: "ZKR",
-    images: [{ url: "/zkr.jpg", width: 512, height: 512, alt: "ZKR Company logo" }],
+    // No url / canonical here: every page sets its own, so nothing inherits the homepage's.
+    // The share image comes from app/opengraph-image.tsx (and work/[slug]/opengraph-image.tsx).
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "ZKR — Independent Web Developer",
-    description:
-      "Websites, dashboards, and product interfaces for businesses and founders.",
-    site: "@Zkr_ad",
-    images: ["/zkr.jpg"],
-  },
-  icons: {
-    icon: "/zkr.jpg",
-    apple: "/zkr.jpg",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  alternates: {
-    canonical: siteUrl,
-  },
+  twitter: { card: "summary_large_image", site: site.twitterHandle, title: site.identity, description },
+  icons: { icon: "/zkr.jpg", apple: "/zkr.jpg" },
+  robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
-      <head>
-        {/*
-          Tells the Dark Reader browser extension this site already has its
-          own dark mode (via next-themes) and to leave the DOM alone. Without
-          this, Dark Reader rewrites every icon's stroke/color inline style
-          before React hydrates, causing a cosmetic (but noisy) hydration
-          warning in dev tools for any visitor who has the extension.
-        */}
-        <meta name="darkreader-lock" content="" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font -- root layout applies globally, not a single page */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
-        />
-      </head>
-      <body className="min-h-full flex flex-col">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <Loader />
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </ThemeProvider>
+    <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
+      <body className="flex min-h-screen flex-col">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-sm focus:bg-paper focus:px-4 focus:py-3 focus:font-semibold focus:text-night"
+        >
+          Skip to content
+        </a>
+        <Navbar />
+        <main id="main" tabIndex={-1} className="flex-1 outline-none">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );

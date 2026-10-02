@@ -1,28 +1,19 @@
 import type { MetadataRoute } from "next";
+import { projects } from "@/lib/projects";
+import { site } from "@/lib/content";
 
-const BASE_URL = "https://zkrcompany.com";
-
+// No fabricated lastModified dates: we only list URLs and let crawlers decide freshness.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
-
-  const routes: Array<{ path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }> = [
-    { path: "", priority: 1, changeFrequency: "monthly" },
-    { path: "/services", priority: 0.9, changeFrequency: "monthly" },
-    { path: "/work", priority: 0.8, changeFrequency: "weekly" },
-    { path: "/process", priority: 0.7, changeFrequency: "yearly" },
-    { path: "/technologies", priority: 0.6, changeFrequency: "yearly" },
-    { path: "/about", priority: 0.7, changeFrequency: "yearly" },
-    { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
-    { path: "/contact", priority: 0.8, changeFrequency: "yearly" },
-    { path: "/careers", priority: 0.5, changeFrequency: "monthly" },
-    { path: "/privacy", priority: 0.3, changeFrequency: "yearly" },
-    { path: "/terms", priority: 0.3, changeFrequency: "yearly" },
+  const paths: { path: string; priority: number }[] = [
+    { path: "", priority: 1 },
+    { path: "/work", priority: 0.9 },
+    ...projects.map((p) => ({ path: `/work/${p.slug}`, priority: 0.8 })),
+    { path: "/services", priority: 0.8 },
+    { path: "/pricing", priority: 0.7 },
+    { path: "/about", priority: 0.7 },
+    { path: "/contact", priority: 0.7 },
+    { path: "/privacy", priority: 0.2 },
+    { path: "/terms", priority: 0.2 },
   ];
-
-  return routes.map((route) => ({
-    url: `${BASE_URL}${route.path}`,
-    lastModified,
-    changeFrequency: route.changeFrequency,
-    priority: route.priority,
-  }));
+  return paths.map(({ path, priority }) => ({ url: `${site.url}${path}`, priority }));
 }

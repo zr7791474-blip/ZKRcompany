@@ -1,44 +1,90 @@
 import { NextRequest, NextResponse } from "next/server";
+import { site } from "@/lib/content";
 
-// NOTE: This route validates the submission and returns success so the
-// front end works end-to-end out of the box. It does not yet send an
-// email or write to a database. Wire it up to your mailer / DB of choice
-// (e.g. Resend, Postmark, or the existing PHP backend's contact.php via
-// a server-to-server fetch) before relying on it in production.
+/**
+ * Contact delivery via Resend (https://resend.com). It only reports success when
+ * Resend actually accepted the email. If RESEND_API_KEY is not set, it returns
+ * 503 { code: "not_configured" } and the UI tells the visitor the message was NOT sent.
+ *
+ * Env vars (see .env.example):
+ *   RESEND_API_KEY  required
+ *   CONTACT_TO      optional, default: site.email
+ *   CONTACT_FROM    optional, default: "ZKR Contact <onboarding@resend.dev>"
+ */
 
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+const hits = new Map<string, number[]>(); // best-effort, per server instance
+const WINDOW_MS = 10 * 60 * 1000;
+const MAX_HITS = 5;
+
+const clip = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
 export async function POST(req: NextRequest) {
+  let body: Record<string, unknown>;
   try {
-    const body = await req.json();
-    const { name, email, message, company } = body ?? {};
-
-    if (typeof name !== "string" || name.trim().length < 2) {
-      return NextResponse.json({ error: "Please enter your name." }, { status: 400 });
-    }
-    if (typeof email !== "string" || !isValidEmail(email)) {
-      return NextResponse.json({ error: "Please enter a valid email." }, { status: 400 });
-    }
-    if (typeof message !== "string" || message.trim().length < 10) {
-      return NextResponse.json(
-        { error: "Tell us a little more about your project (10+ characters)." },
-        { status: 400 }
-      );
-    }
-
-    // Server-side log for now — replace with real delivery.
-    console.log("New contact submission:", {
-      name,
-      email,
-      company: company ?? null,
-      message,
-      receivedAt: new Date().toISOString(),
-    });
-
-    return NextResponse.json({ ok: true });
+    body = await req.json();
   } catch {
-    return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
+    return NextResponse.json({ ok: false, error: "Invalid request." }, { status: 400 });
   }
+
+  // Honeypot: real visitors never fill this. Respond neutrally and drop it.
+  if (clip(body.site, 200)) return NextResponse.json({ ok: true });
+
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  const now = Date.now();
+  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
+  if (recent.length >= MAX_HITS) {
+    return NextResponse.json({ ok: false, error: "Too many messages. Please try again later." }, { status: 429 });
+  }
+
+  const d = {
+    name: clip(body.name, 120),
+    email: clip(body.email, 200),
+    company: clip(body.company, 200),
+    projectType: clip(body.projectType, 100),
+    budget: clip(body.budget, 100),
+    timeline: clip(body.timeline, 100),
+    website: clip(body.website, 300),
+    message: clip(body.message, 5000),
+  };
+
+  const fields: Record<string, string> = {};
+  if (d.name.length < 2) fields.name = "Please enter your name.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) fields.email = "Please enter a valid email address.";
+  if (d.message.length < 10) fields.message = "Please tell me a little more (at least 10 characters).";
+  if (Object.keys(fields).length) return NextResponse.json({ ok: false, fields }, { status: 400 });
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return NextResponse.json({ ok: false, code: "not_configured" }, { status: 503 });
+
+  const text = [
+    `Name: ${d.name}`,
+    `Email: ${d.email}`,
+    `Company / project: ${d.company || "-"}`,
+    `Project type: ${d.projectType || "-"}`,
+    `Budget: ${d.budget || "-"}`,
+    `Timeline: ${d.timeline || "-"}`,
+    `Current website: ${d.website || "-"}`,
+    "",
+    d.message,
+  ].join("\n");
+
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: process.env.CONTACT_FROM ?? "ZKR Contact <onboarding@resend.dev>",
+        to: [process.env.CONTACT_TO ?? site.email],
+        reply_to: d.email,
+        subject: `New project enquiry from ${d.name}`,
+        text,
+      }),
+    });
+    if (!res.ok) return NextResponse.json({ ok: false, code: "delivery_failed" }, { status: 502 });
+  } catch {
+    return NextResponse.json({ ok: false, code: "delivery_failed" }, { status: 502 });
+  }
+
+  hits.set(ip, [...recent, now]);
+  return NextResponse.json({ ok: true });
 }

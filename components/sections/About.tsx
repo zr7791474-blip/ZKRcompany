@@ -1,58 +1,60 @@
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Reveal, RevealGroup } from "@/components/ui/Reveal";
-import { GrowthLine } from "@/components/ui/GrowthLine";
-import { values } from "@/lib/content";
+import { Reveal } from "@/components/ui/Reveal";
+import { SectionLabel } from "@/components/ui/SectionLabel";
+import { ImagePlaceholder } from "@/components/work/ProjectImage";
+import { resolveFounderPortrait } from "@/lib/project-images";
+import { site } from "@/lib/content";
+
+/** Portrait slot: shows public/founder/portrait.webp when present, otherwise a clean labelled frame. */
+export function PortraitSlot({ className }: { className?: string }) {
+  const portrait = resolveFounderPortrait(`Portrait of ${site.founder}`);
+  if (portrait) {
+    return (
+      <Image
+        src={portrait.src}
+        alt={portrait.alt}
+        width={portrait.width}
+        height={portrait.height}
+        sizes="(min-width: 1024px) 400px, 80vw"
+        className={`h-auto w-full border border-night/20 ${className ?? ""}`}
+      />
+    );
+  }
+  return <ImagePlaceholder className={`aspect-[4/5] ${className ?? ""}`} hint="public/founder/portrait.webp" />;
+}
 
 export function About() {
   return (
-    <section id="about" className="relative py-28 sm:py-36">
-      <Container>
-        <div className="grid gap-16 lg:grid-cols-[0.9fr_1.1fr]">
-          <div>
-            <SectionHeading
-              eyebrow="About ZKR"
-              title="I started ZKR because most agency work looks the same."
-              description="ZKR is my independent studio — built on the idea that people would rather work directly with the person building their project than get passed around a team."
-            />
-            <Reveal delay={0.2} className="mt-8 flex flex-col gap-4 max-w-md">
-              <div className="rounded-2xl border border-ink-950/8 bg-mist-100 p-5 dark:border-white/10 dark:bg-white/5">
-                <p className="font-display text-sm font-semibold text-ink-950 dark:text-white">My mission</p>
-                <p className="mt-1.5 text-sm leading-relaxed text-ink-500 dark:text-white/60">
-                  Deliver reliable, honestly-priced digital work — and be straight
-                  about what&apos;s actually worth building.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-ink-950/8 bg-mist-100 p-5 dark:border-white/10 dark:bg-white/5">
-                <p className="font-display text-sm font-semibold text-ink-950 dark:text-white">My approach</p>
-                <p className="mt-1.5 text-sm leading-relaxed text-ink-500 dark:text-white/60">
-                  Craft, transparency, and following through on what I say I&apos;ll do.
-                </p>
-              </div>
-              <a
-                href="/about"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-950 transition-colors hover:text-ember-600 dark:text-white dark:hover:text-amber-glow"
-              >
-                Read my full story →
-              </a>
-            </Reveal>
-          </div>
-
-          <div className="relative pl-8">
-            <div className="absolute left-[3px] top-2 bottom-2 w-px bg-gradient-to-b from-ember-500 via-amber-glow to-moss-400" />
-            <RevealGroup className="flex flex-col gap-10">
-              {values.map((v) => (
-                <Reveal key={v.title} className="relative">
-                  <span className="absolute -left-[35px] top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full border-2 border-mist-50 bg-ember-500 dark:border-[#1D3557]" />
-                  <p className="mt-1 font-display text-lg font-semibold text-ink-950 dark:text-white">{v.title}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-ink-500 dark:text-white/60">{v.description}</p>
-                </Reveal>
-              ))}
-            </RevealGroup>
-          </div>
+    <section id="about" aria-labelledby="about-heading" className="border-t border-night/15">
+      <Container className="py-24 sm:py-32">
+        <SectionLabel index="04">About ZKR</SectionLabel>
+        <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <Reveal variant="image" className="max-w-sm lg:col-span-4">
+            <PortraitSlot />
+          </Reveal>
+          <Reveal className="lg:col-span-7 lg:col-start-6">
+            <h2 id="about-heading" className="text-[clamp(2.25rem,4.6vw,3.75rem)] font-semibold leading-[1.02]">
+              I&apos;m {site.founder}, the developer behind ZKR.
+            </h2>
+            <div className="mt-8 flex max-w-[54ch] flex-col gap-5 text-lg leading-relaxed text-night/80">
+              <p>
+                I started ZKR to work directly with businesses and founders who care about the quality of what they put
+                online.
+              </p>
+              <p>
+                I handle the design, development and deployment myself, so there are no account managers or unnecessary
+                hand-offs.
+              </p>
+            </div>
+            <Link href="/about" className="u-link group mt-8 inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold">
+              Read more about me <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+            </Link>
+          </Reveal>
         </div>
       </Container>
-      <GrowthLine className="mt-24 h-16 opacity-60" />
     </section>
   );
 }

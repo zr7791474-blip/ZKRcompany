@@ -1,75 +1,57 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Check, ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { RevealGroup, revealVariants } from "@/components/ui/Reveal";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 import { pricing } from "@/lib/content";
-import { cn } from "@/lib/utils";
 
-export function Pricing() {
+export const pricingNote =
+  "Prices are starting points. I confirm scope, timeline and price with you before work begins.";
+
+export function PricingRows({ detailed }: { detailed?: boolean }) {
   return (
-    <section id="pricing" className="py-28 sm:py-36">
-      <Container>
-        <SectionHeading
-          eyebrow="Pricing"
-          title="Straightforward pricing, no surprise invoices."
-          description="Every engagement starts with a scoped estimate. These are typical ranges — your quote comes after a short discovery call."
-          align="center"
-          className="mx-auto"
-        />
-
-        <RevealGroup className="mt-16 grid gap-6 lg:grid-cols-3" stagger={0.1}>
-          {pricing.map((plan) => (
-            <motion.div
-              key={plan.name}
-              variants={revealVariants}
-              whileHover={{ y: -6 }}
-              transition={{ type: "spring", stiffness: 300, damping: 24 }}
-              className={cn(
-                "relative flex flex-col rounded-3xl border p-8",
-                plan.popular
-                  ? "border-ember-500/40 bg-gradient-to-b from-ember-500/[0.06] to-transparent shadow-[0_30px_60px_-25px_rgba(235,94,40,0.35)] dark:from-ember-500/10"
-                  : "border-ink-950/8 bg-mist-100 dark:border-white/10 dark:bg-white/[0.03]"
-              )}
-            >
-              {plan.popular && (
-                <span className="absolute -top-3 left-8 rounded-full bg-gradient-to-r from-ember-500 to-amber-glow px-3 py-1 font-mono text-[11px] font-semibold text-white">
-                  MOST POPULAR
-                </span>
-              )}
-              <h3 className="font-display text-lg font-semibold text-ink-950 dark:text-white">{plan.name}</h3>
-              <p className="mt-1 text-sm text-ink-500 dark:text-white/60">{plan.description}</p>
-              <div className="mt-6 flex items-baseline gap-1.5">
-                <span className="font-display text-4xl font-bold text-ink-950 dark:text-white">{plan.price}</span>
-                <span className="text-sm text-ink-500 dark:text-white/50">{plan.period}</span>
-              </div>
-
-              <ul className="mt-8 flex flex-1 flex-col gap-3">
-                {plan.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5 text-sm text-ink-950/80 dark:text-white/70">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-moss-500" />
+    <ul className="border-t border-night/20">
+      {pricing.map((tier) => (
+        <li key={tier.name} className="grid gap-5 border-b border-night/20 py-8 sm:py-10 lg:grid-cols-12 lg:gap-10">
+          <h3 className="text-3xl font-semibold lg:col-span-3">{tier.name}</h3>
+          <p className="lg:col-span-3">
+            <span className="font-display text-4xl font-semibold tracking-tight">{tier.price}</span>
+            <span className="ml-2 font-mono text-xs text-night/70">{tier.note}</span>
+          </p>
+          <div className="lg:col-span-6">
+            <p className="max-w-[46ch] text-lg text-night/80">{tier.description}</p>
+            {detailed && (
+              <ul className="mt-5 grid max-w-xl gap-x-8 text-[15px] sm:grid-cols-2">
+                {tier.features.map((f) => (
+                  <li key={f} className="border-t border-night/10 py-2">
                     {f}
                   </li>
                 ))}
               </ul>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
-              <a
-                href="/contact"
-                className={cn(
-                  "mt-8 inline-flex items-center justify-center gap-1.5 rounded-full px-5 py-3 text-sm font-semibold transition-colors",
-                  plan.popular
-                    ? "bg-ink-950 text-white hover:bg-ember-600 dark:bg-white dark:text-ink-950 dark:hover:bg-amber-glow"
-                    : "border border-ink-950/15 text-ink-950 hover:border-ember-500 hover:text-ember-600 dark:border-white/20 dark:text-white"
-                )}
-              >
-                {plan.price === "Custom" ? "Request a quote" : "Get started"}
-                <ArrowUpRight className="h-3.5 w-3.5" />
-              </a>
-            </motion.div>
-          ))}
-        </RevealGroup>
+export function Pricing() {
+  return (
+    <section id="pricing" aria-labelledby="pricing-heading" className="border-t border-night/15">
+      <Container className="py-24 sm:py-32">
+        <SectionLabel index="05">Pricing</SectionLabel>
+        <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
+          <h2 id="pricing-heading" className="max-w-3xl text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none">
+            Prices on the page
+          </h2>
+          <Link href="/pricing" className="u-link group inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold">
+            What&apos;s included <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+          </Link>
+        </div>
+        <div className="mt-14">
+          <PricingRows />
+        </div>
+        <p className="mt-6 max-w-[60ch] text-night/70">{pricingNote}</p>
       </Container>
     </section>
   );

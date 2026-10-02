@@ -2,78 +2,96 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---- Base ---------------------------------------------------------------- */
 :root {
-  --background: #f1faee;
-  --foreground: #1d3557;
-  --surface: #e4f1ec;
-  --border-soft: rgb(29 53 87 / 0.1);
-  color-scheme: light;
+  --focus: #0d1424; /* focus ring colour on light surfaces */
 }
-
-.dark {
-  --background: #1d3557;
-  --foreground: #f1faee;
-  --surface: #324766;
-  --border-soft: rgb(241 250 238 / 0.1);
-  color-scheme: dark;
-}
-
-* {
-  border-color: var(--border-soft);
+/* Any dark surface switches the focus ring to paper. */
+.surface-dark {
+  --focus: #f3efe7;
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  background: #f3efe7;
+  color: #0d1424;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #b82333;
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+/* ---- Components ---------------------------------------------------------- */
+
+/* Underline that draws in on hover/focus (links and "text" buttons). */
+.u-link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  transition: background-size 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.2s;
+  padding-bottom: 2px;
+}
+.u-link:hover,
+.u-link:focus-visible {
+  background-size: 0% 1px;
+  background-position: 100% 100%;
+}
+
+/* ---- Reveal (one subtle entrance, only when JS is available) -------------- */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s),
+      transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s);
+  }
+  .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+  /* Image reveal: wipe open from the top. */
+  .reveal-img {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1s cubic-bezier(0.7, 0, 0.2, 1) var(--d, 0s);
+  }
+  .reveal-img.is-in {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Hover image movement: slow, small, on the image only. */
+@media (prefers-reduced-motion: no-preference) {
+  .img-zoom img {
+    transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .img-zoom:hover img,
+  .img-zoom:focus-within img {
+    transform: scale(1.025);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-::selection {
-  background: #e63946;
-  color: white;
-}
-
-/* Fine grain noise overlay used across the page for tactile depth */
-.grain::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.035;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-.text-balance {
-  text-wrap: balance;
-}
-
-:focus-visible {
-  outline: 2px solid #e63946;
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }

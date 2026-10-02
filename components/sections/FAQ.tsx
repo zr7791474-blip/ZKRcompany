@@ -1,60 +1,29 @@
-"use client";
-
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Reveal } from "@/components/ui/Reveal";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 import { faqs } from "@/lib/content";
 
+/** Native <details>/<summary>: keyboard accessible and works without any JavaScript. */
 export function FAQ() {
-  const [open, setOpen] = useState<number | null>(0);
-
   return (
-    <section className="bg-mist-100 py-28 sm:py-36 dark:bg-white/[0.02]">
-      <Container className="max-w-3xl">
-        <SectionHeading eyebrow="FAQ" title="Questions, answered." align="center" className="mx-auto" />
-
-        <div className="mt-14 flex flex-col divide-y divide-ink-950/8 dark:divide-white/10">
-          {faqs.map((faq, i) => {
-            const isOpen = open === i;
-            return (
-              <Reveal key={faq.question} delay={i * 0.04} className="py-2">
-                <button
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between gap-6 py-5 text-left"
-                  aria-expanded={isOpen}
-                >
-                  <span className="font-display text-base font-medium text-ink-950 sm:text-lg dark:text-white">
-                    {faq.question}
-                  </span>
-                  <motion.span
-                    animate={{ rotate: isOpen ? 45 : 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink-950/5 text-ink-950 dark:bg-white/10 dark:text-white"
-                  >
-                    <Plus className="h-4 w-4" />
-                  </motion.span>
-                </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <p className="pb-6 text-sm leading-relaxed text-ink-500 sm:text-base dark:text-white/60">
-                        {faq.answer}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </Reveal>
-            );
-          })}
+    <section id="faq" aria-labelledby="faq-heading" className="border-t border-night/15 bg-paper-deep">
+      <Container className="py-24 sm:py-32">
+        <SectionLabel index="06">FAQ</SectionLabel>
+        <div className="mt-6 grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <h2 id="faq-heading" className="text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none lg:col-span-4">
+            Questions
+          </h2>
+          <div className="border-t border-night/20 lg:col-span-8">
+            {faqs.map((f) => (
+              <details key={f.question} className="group border-b border-night/20">
+                <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-4 text-lg font-medium [&::-webkit-details-marker]:hidden">
+                  {f.question}
+                  <Plus className="h-5 w-5 shrink-0 transition-transform group-open:rotate-45" aria-hidden />
+                </summary>
+                <p className="max-w-[60ch] pb-6 text-night/80">{f.answer}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </Container>
     </section>

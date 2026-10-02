@@ -1,78 +1,85 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { Container } from "@/components/ui/Container";
+import { ButtonLink } from "@/components/ui/Button";
 import { PageHero } from "@/components/ui/PageHero";
-import { Reveal, RevealGroup } from "@/components/ui/Reveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { GrowthLine } from "@/components/ui/GrowthLine";
-import { values, founder } from "@/lib/content";
+import { PortraitSlot } from "@/components/sections/About";
+import { founder, whyUs } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "About",
-  description: "ZKR is an independent developer studio — the story, mission, and values behind the work.",
-};
+const isDev = process.env.NODE_ENV !== "production";
+const description =
+  "ZKR is an independent studio operated directly by Zakariaa Adli. You work with the person who designs and builds the product.";
+
+export const metadata: Metadata = pageMeta({ title: "About", description: description, path: "/about" });
 
 export default function AboutPage() {
   return (
     <>
       <PageHero
-        eyebrow="About ZKR"
-        title="I started ZKR because most agency work looks the same."
-        description="ZKR is my independent studio, built on a simple bet: people would rather work directly with the person building their project than get passed around a team."
+        eyebrow="04 / About"
+        title={<>I&apos;m {founder.name}, the developer behind ZKR.</>}
+        description="ZKR is an independent studio operated directly by me. I handle design, development and deployment myself."
       />
 
-      {/* Mission / vision */}
-      <section className="py-24 sm:py-28">
-        <Container>
-          <div className="grid gap-6 sm:grid-cols-2">
-            <Reveal className="rounded-3xl border border-ink-950/8 bg-mist-100 p-8 dark:border-white/10 dark:bg-white/[0.03]">
-              <p className="font-display text-lg font-semibold text-ink-950 dark:text-white">My mission</p>
-              <p className="mt-3 text-base leading-relaxed text-ink-500 dark:text-white/60">
-                Deliver reliable, honestly-priced digital work — and be straight with clients about
-                what&apos;s actually worth building.
-              </p>
-            </Reveal>
-            <Reveal delay={0.08} className="rounded-3xl border border-ink-950/8 bg-mist-100 p-8 dark:border-white/10 dark:bg-white/[0.03]">
-              <p className="font-display text-lg font-semibold text-ink-950 dark:text-white">My approach</p>
-              <p className="mt-3 text-base leading-relaxed text-ink-500 dark:text-white/60">
-                Craft, transparency, and following through on what I say I&apos;ll do — no matter the size
-                of the project.
-              </p>
-            </Reveal>
+      <Container className="py-16 sm:py-24">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="max-w-sm lg:col-span-4">
+            <PortraitSlot />
+          </div>
+          <div className="lg:col-span-7 lg:col-start-6">
+            <p className="font-mono text-xs text-night/70">
+              {founder.role} · {founder.location}
+            </p>
+            {founder.bio.length > 0 ? (
+              <div className="mt-6 flex max-w-[60ch] flex-col gap-5 text-lg leading-relaxed text-night/85">
+                {founder.bio.map((p) => (
+                  <p key={p}>{p}</p>
+                ))}
+              </div>
+            ) : (
+              <div className="mt-6 max-w-[60ch] text-lg leading-relaxed text-night/85">
+                <p>
+                  I started ZKR to work directly with businesses and founders who care about the quality of what they put online.
+                </p>
+                {isDev && (
+                  <p className="mt-4 font-mono text-xs text-red">
+                    [TODO(zakariaa): add your real bio in founder.bio — lib/content.ts. Only true facts.]
+                  </p>
+                )}
+              </div>
+            )}
+            {founder.facts.length > 0 && (
+              <dl className="mt-8 max-w-md border-t border-night/20">
+                {founder.facts.map((f) => (
+                  <div key={f.label} className="grid grid-cols-[8rem_1fr] gap-4 border-b border-night/20 py-3">
+                    <dt className="font-mono text-xs text-night/70">{f.label}</dt>
+                    <dd>{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+          </div>
+        </div>
+      </Container>
+
+      <section aria-labelledby="working-heading" className="border-t border-night/15 bg-paper-deep">
+        <Container className="py-16 sm:py-24">
+          <h2 id="working-heading" className="text-[clamp(2rem,4vw,3rem)] font-semibold leading-none">
+            Working with me
+          </h2>
+          <ul className="mt-10 grid gap-x-12 sm:grid-cols-2">
+            {whyUs.map((w) => (
+              <li key={w.title} className="border-t border-night/20 py-5">
+                <h3 className="text-xl font-semibold">{w.title}</h3>
+                <p className="mt-2 max-w-[44ch] text-night/75">{w.description}</p>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-10">
+            <ButtonLink href="/contact">Start a project</ButtonLink>
           </div>
         </Container>
       </section>
-
-      {/* Values */}
-      <section className="bg-mist-100 py-24 sm:py-28 dark:bg-white/[0.02]">
-        <Container>
-          <SectionHeading eyebrow="What I value" title="Four things I don't compromise on." align="center" className="mx-auto" />
-          <RevealGroup className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" stagger={0.08}>
-            {values.map((v) => (
-              <Reveal key={v.title} className="rounded-2xl border border-ink-950/8 bg-white p-6 dark:border-white/10 dark:bg-white/[0.03]">
-                <h3 className="font-display text-base font-semibold text-ink-950 dark:text-white">{v.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-500 dark:text-white/60">{v.description}</p>
-              </Reveal>
-            ))}
-          </RevealGroup>
-        </Container>
-      </section>
-
-      {/* Founder */}
-      <section className="py-24 sm:py-28">
-        <Container className="max-w-md">
-          <SectionHeading eyebrow="Behind ZKR" title="Just one developer, for now." align="center" className="mx-auto" />
-          <Reveal delay={0.1} className="mt-14 rounded-2xl border border-ink-950/8 bg-mist-100 p-6 text-center dark:border-white/10 dark:bg-white/[0.03]">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-ember-500 to-amber-glow font-display text-lg font-semibold text-white">
-              {founder.name.split(" ").map((n) => n[0]).join("")}
-            </div>
-            <h3 className="mt-4 font-display text-base font-semibold text-ink-950 dark:text-white">{founder.name}</h3>
-            <p className="text-sm text-ember-600 dark:text-amber-glow">{founder.role}</p>
-            <p className="mt-1 text-xs text-ink-500 dark:text-white/50">{founder.focus}</p>
-          </Reveal>
-        </Container>
-      </section>
-
-      <GrowthLine className="h-16 opacity-40" />
     </>
   );
 }

@@ -1,80 +1,29 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * ZKR palette — deliberately small. One accent (red).
+ *  night  : deep navy, almost black (dark surfaces, text on light)
+ *  paper  : warm off-white (light surfaces, text on dark)
+ *  blue   : muted blue, used rarely for secondary detail
+ *  red    : ZKR red — the action colour. `red` on light surfaces, `red-bright` on dark.
+ */
 const config: Config = {
-  darkMode: "class",
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        // Primary red ramp — CTAs, brand emphasis, active states
-        ember: {
-          50: "#fdeceb",
-          400: "#ec9a9a",
-          500: "#e63946",
-          600: "#c62839",
-          700: "#a81f2e",
-        },
-        // Secondary accents — cyan highlight + soft aqua tint
-        "amber-glow": "#a8dadc",
-        "amber-soft": "#cdeae5",
-        // Trust blue ramp — secondary sections, decorative accents
-        moss: {
-          300: "#a8dadc",
-          400: "#77abbd",
-          500: "#457b9d",
-          600: "#31587a",
-          700: "#1d3557",
-        },
-        // Ink (text/dark surfaces) — navy scale
-        ink: {
-          950: "#1d3557",
-          500: "#3d6f8f",
-          300: "#c7d9e3",
-        },
-        // Mist (light backgrounds) — cream/aqua tints
-        mist: {
-          50: "#f1faee",
-          100: "#e4f1ec",
-        },
+        night: { DEFAULT: "#0d1424", 2: "#151f35" },
+        paper: { DEFAULT: "#f3efe7", deep: "#e8e1d2" },
+        blue: { DEFAULT: "#6f8dab", deep: "#3f5c7a" },
+        red: { DEFAULT: "#b82333", dark: "#9c1c2b", bright: "#f2707a" },
       },
       fontFamily: {
-        display: ['"Bricolage Grotesque"', "ui-sans-serif", "system-ui", "sans-serif"],
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ['"IBM Plex Mono"', "ui-monospace", '"SFMono-Regular"', "monospace"],
+        display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
-      keyframes: {
-        orbit: {
-          from: { transform: "rotate(0deg) translateX(var(--r)) rotate(0deg)" },
-          to: { transform: "rotate(360deg) translateX(var(--r)) rotate(-360deg)" },
-        },
-        "orbit-reverse": {
-          from: { transform: "rotate(360deg) translateX(var(--r)) rotate(-360deg)" },
-          to: { transform: "rotate(0deg) translateX(var(--r)) rotate(0deg)" },
-        },
-        drift: {
-          "0%, 100%": { transform: "translate(0, 0) scale(1)" },
-          "50%": { transform: "translate(18px, -24px) scale(1.05)" },
-        },
-        marquee: {
-          from: { transform: "translateX(0)" },
-          to: { transform: "translateX(-50%)" },
-        },
-        blink: {
-          "50%": { opacity: "0" },
-        },
-      },
-      animation: {
-        "orbit-slow": "orbit 32s linear infinite",
-        "orbit-slow-reverse": "orbit-reverse 40s linear infinite",
-        drift: "drift 14s ease-in-out infinite",
-        "drift-delay": "drift 16s ease-in-out infinite 2s",
-        marquee: "marquee 34s linear infinite",
-        blink: "blink 1.6s steps(1) infinite",
-      },
+      borderRadius: { DEFAULT: "2px", sm: "2px", md: "3px", lg: "4px" },
+      maxWidth: { page: "88rem" },
     },
   },
   plugins: [],
