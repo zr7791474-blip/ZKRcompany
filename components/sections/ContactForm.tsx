@@ -28,7 +28,6 @@ export function ContactForm() {
       "",
       `Name: ${get("name")}`,
       `Email: ${get("email")}`,
-      `Company / project: ${get("company")}`,
       `Project type: ${get("projectType")}`,
       `Budget: ${get("budget")}`,
       `Timeline: ${get("timeline")}`,
@@ -105,13 +104,6 @@ export function ContactForm() {
         <input id="cf-email" name="email" type="email" autoComplete="email" required aria-required="true"
           aria-invalid={!!err("email")} aria-describedby={describe("email")} className={field} />
         {err("email") && <p id="email-error" className="mt-1 text-sm text-red">{err("email")}</p>}
-      </div>
-
-      <div className="sm:col-span-2">
-        <label htmlFor="cf-company" className={labelCls}>
-          Company / project
-        </label>
-        <input id="cf-company" name="company" type="text" autoComplete="organization" className={field} />
       </div>
 
       <div>

@@ -10,7 +10,7 @@ import { Contact } from "@/components/sections/Contact";
 import { site } from "@/lib/content";
 
 const description =
-  "ZKR is the independent studio of Zakariaa Adli. I design and build websites and digital products, working directly with each client.";
+  "I'm Zakariaa Adli, an independent developer. I design and build websites and digital products under the ZKR name, working directly with each client.";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -25,6 +25,7 @@ const jsonLd = {
   url: site.url,
   email: site.email,
   worksFor: { "@type": "Organization", name: "ZKR", url: site.url },
+  sameAs: [site.portfolioUrl],
   description,
   address: { "@type": "PostalAddress", addressLocality: "Casablanca", addressCountry: "MA" },
 };

@@ -3,12 +3,13 @@ import { pageMeta } from "@/lib/seo";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { PageHero } from "@/components/ui/PageHero";
+import { PortfolioLink } from "@/components/ui/PortfolioLink";
 import { PortraitSlot } from "@/components/sections/About";
 import { founder, whyUs } from "@/lib/content";
 
 const isDev = process.env.NODE_ENV !== "production";
 const description =
-  "ZKR is an independent studio operated directly by Zakariaa Adli. You work with the person who designs and builds the product.";
+  "I'm Zakariaa Adli, an independent developer. ZKR is the name I work under: you work with the person who designs and builds the product.";
 
 export const metadata: Metadata = pageMeta({ title: "About", description: description, path: "/about" });
 
@@ -18,7 +19,7 @@ export default function AboutPage() {
       <PageHero
         eyebrow="04 / About"
         title={<>I&apos;m {founder.name}, the developer behind ZKR.</>}
-        description="ZKR is an independent studio operated directly by me. I handle design, development and deployment myself."
+        description="ZKR is the name I work under as an independent developer. I handle design, development and deployment myself."
       />
 
       <Container className="py-16 sm:py-24">
@@ -48,6 +49,10 @@ export default function AboutPage() {
                 )}
               </div>
             )}
+            <div className="mt-8 border-t border-night/20 pt-5">
+              <p className="font-mono text-xs text-night/70">Personal portfolio</p>
+              <PortfolioLink className="mt-1" />
+            </div>
             {founder.facts.length > 0 && (
               <dl className="mt-8 max-w-md border-t border-night/20">
                 {founder.facts.map((f) => (

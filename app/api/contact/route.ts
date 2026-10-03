@@ -39,7 +39,6 @@ export async function POST(req: NextRequest) {
   const d = {
     name: clip(body.name, 120),
     email: clip(body.email, 200),
-    company: clip(body.company, 200),
     projectType: clip(body.projectType, 100),
     budget: clip(body.budget, 100),
     timeline: clip(body.timeline, 100),
@@ -59,7 +58,6 @@ export async function POST(req: NextRequest) {
   const text = [
     `Name: ${d.name}`,
     `Email: ${d.email}`,
-    `Company / project: ${d.company || "-"}`,
     `Project type: ${d.projectType || "-"}`,
     `Budget: ${d.budget || "-"}`,
     `Timeline: ${d.timeline || "-"}`,

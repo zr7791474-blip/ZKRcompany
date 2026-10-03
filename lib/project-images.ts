@@ -6,7 +6,7 @@ import type { Project } from "./projects";
 /**
  * Build-time screenshot resolver (server only).
  *
- * For every path listed in the project (cover + 4 screenshots) we check that the
+ * For every path listed in the project (cover + 4 screenshots) this checks that the
  * file really exists in /public and read its true pixel size, so next/image gets
  * correct width/height. WebP is expected, but a .avif/.jpg/.jpeg/.png with the
  * same base name is accepted too (handy while you're still exporting).

@@ -17,7 +17,7 @@ export default function PrivacyPage() {
               <h2 className="font-display text-lg font-semibold text-night">What I collect</h2>
               <p className="mt-2">
                 When you submit the contact form or email me directly, I collect your name, email address,
-                company or project name, project type, budget range, timeline and current website (if provided), and the contents of your message. Contact form messages are delivered to me by email through a third-party email service (Resend). I don&apos;t use tracking cookies or
+                project type, budget range, timeline and current website (if provided), and the contents of your message. Contact form messages are delivered to me by email through a third-party email service (Resend). I don&apos;t use tracking cookies or
                 third-party ad pixels on this site.
               </p>
             </div>

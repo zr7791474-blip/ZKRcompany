@@ -1,4 +1,4 @@
-import { Mail, MessageCircle, CalendarDays } from "lucide-react";
+import { Mail, MessageCircle, CalendarDays, Globe } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { ContactForm } from "@/components/sections/ContactForm";
@@ -40,6 +40,7 @@ export function Contact({ standalone }: { standalone?: boolean }) {
             <ul className="mt-10">
               <Direct href={`mailto:${site.email}`} icon={<Mail className="h-5 w-5" />} label="Email" value={site.email} />
               <Direct href={site.whatsapp} icon={<MessageCircle className="h-5 w-5" />} label="WhatsApp" value="Message me on WhatsApp" external />
+              <Direct href={site.portfolioUrl} icon={<Globe className="h-5 w-5" />} label="Personal portfolio" value="View my portfolio" external />
               {site.bookingUrl ? (
                 <Direct href={site.bookingUrl} icon={<CalendarDays className="h-5 w-5" />} label="Book a call" value="Pick a time" external />
               ) : (

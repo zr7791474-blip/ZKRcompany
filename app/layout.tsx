@@ -28,7 +28,7 @@ const mono = localFont({
 });
 
 const description =
-  "ZKR is the independent studio of Zakariaa Adli. I design and build websites and digital products, working directly with each client.";
+  "I'm Zakariaa Adli, an independent developer. I design and build websites and digital products under the ZKR name, working directly with each client.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),

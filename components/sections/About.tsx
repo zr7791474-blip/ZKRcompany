@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { PortfolioLink } from "@/components/ui/PortfolioLink";
 import { ImagePlaceholder } from "@/components/work/ProjectImage";
 import { resolveFounderPortrait } from "@/lib/project-images";
 import { site } from "@/lib/content";
@@ -49,9 +50,12 @@ export function About() {
                 hand-offs.
               </p>
             </div>
-            <Link href="/about" className="u-link group mt-8 inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold">
-              Read more about me <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
-            </Link>
+            <div className="mt-8 flex flex-col gap-1 sm:flex-row sm:gap-8">
+              <Link href="/about" className="u-link group inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold">
+                Read more about me <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+              </Link>
+              <PortfolioLink />
+            </div>
           </Reveal>
         </div>
       </Container>

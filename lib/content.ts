@@ -19,6 +19,8 @@ export const site = {
   whatsapp: "https://wa.me/212657516301",
   twitter: "https://x.com/Zkr_ad",
   twitterHandle: "@Zkr_ad",
+  /** Official personal portfolio. Use exactly this URL. */
+  portfolioUrl: "https://zkrportfolio.vercel.app/",
   /** TODO(zakariaa): paste a real booking link (Cal.com, Calendly…). The "Book a call" button only appears when this is set. */
   bookingUrl: "",
 };

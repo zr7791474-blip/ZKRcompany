@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { projects } from "@/lib/projects";
 import { site } from "@/lib/content";
 
-// No fabricated lastModified dates: we only list URLs and let crawlers decide freshness.
+// No fabricated lastModified dates: only URLs are listed; crawlers decide freshness.
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths: { path: string; priority: number }[] = [
     { path: "", priority: 1 },

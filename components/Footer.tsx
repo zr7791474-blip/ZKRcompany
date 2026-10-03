@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Mail, MessageCircle } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PortfolioLink } from "@/components/ui/PortfolioLink";
 import { navLinks, site } from "@/lib/content";
 
 const iconLink =
@@ -21,6 +22,7 @@ export function Footer() {
             >
               Tell me about your project
             </Link>
+            <PortfolioLink className="mt-2 block" label="Personal portfolio" />
           </div>
 
           <nav aria-label="Footer">

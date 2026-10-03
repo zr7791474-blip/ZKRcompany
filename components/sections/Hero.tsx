@@ -27,8 +27,8 @@ export function Hero() {
         </h1>
 
         <p className="mt-10 max-w-[52ch] text-lg leading-relaxed text-paper/80 sm:text-xl">
-          ZKR is my independent studio. I handle design, development and deployment myself, so you work directly with the
-          person building your product.
+          ZKR is the name I work under as an independent developer. I handle design, development and deployment myself, so you
+          work directly with the person building your product.
         </p>
 
         <div className="mt-10 flex flex-col gap-3 sm:flex-row">
