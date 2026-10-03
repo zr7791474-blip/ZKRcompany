@@ -14,7 +14,7 @@ export function SectionLabel({
 }) {
   return (
     <p className={cn("font-mono text-xs", dark ? "text-paper/70" : "text-night/70", className)}>
-      <span className={dark ? "text-red-bright" : "text-red"}>{index}</span> / {children}
+      <span className={dark ? "text-blue" : "text-blue-deep"}>{index}</span> / {children}
     </p>
   );
 }

@@ -94,7 +94,7 @@ export function ContactForm() {
         </label>
         <input id="cf-name" name="name" type="text" autoComplete="name" required aria-required="true"
           aria-invalid={!!err("name")} aria-describedby={describe("name")} className={field} />
-        {err("name") && <p id="name-error" className="mt-1 text-sm text-red">{err("name")}</p>}
+        {err("name") && <p id="name-error" className="mt-1 text-sm text-red-dark">{err("name")}</p>}
       </div>
 
       <div>
@@ -103,7 +103,7 @@ export function ContactForm() {
         </label>
         <input id="cf-email" name="email" type="email" autoComplete="email" required aria-required="true"
           aria-invalid={!!err("email")} aria-describedby={describe("email")} className={field} />
-        {err("email") && <p id="email-error" className="mt-1 text-sm text-red">{err("email")}</p>}
+        {err("email") && <p id="email-error" className="mt-1 text-sm text-red-dark">{err("email")}</p>}
       </div>
 
       <div>
@@ -155,7 +155,7 @@ export function ContactForm() {
         </label>
         <textarea id="cf-message" name="message" rows={6} required aria-required="true"
           aria-invalid={!!err("message")} aria-describedby={describe("message")} className={field} />
-        {err("message") && <p id="message-error" className="mt-1 text-sm text-red">{err("message")}</p>}
+        {err("message") && <p id="message-error" className="mt-1 text-sm text-red-dark">{err("message")}</p>}
       </div>
 
       <div className="sm:col-span-2">
@@ -170,7 +170,7 @@ export function ContactForm() {
         {/* Always rendered so screen readers announce changes. */}
         <div role="status" aria-live="polite" className="mt-5 text-[15px]">
           {status === "sent" && <p className="border-l-2 border-night pl-4">{message}</p>}
-          {status === "idle" && message && <p className="text-red">{message}</p>}
+          {status === "idle" && message && <p className="text-red-dark">{message}</p>}
         </div>
         <div role="alert" className="text-[15px]">
           {status === "failed" && (

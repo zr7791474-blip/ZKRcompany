@@ -24,7 +24,7 @@ export default function PricingPage() {
         <div className="mt-10 max-w-[62ch] border-l-2 border-night pl-5">
           <p className="text-lg">{pricingNote}</p>
           {isDev && (
-            <p className="mt-3 font-mono text-xs text-red">
+            <p className="mt-3 font-mono text-xs text-red-dark">
               [TODO(zakariaa): add a short “not included” list (e.g. hosting, domains) — only what is actually true — in lib/content.ts]
             </p>
           )}

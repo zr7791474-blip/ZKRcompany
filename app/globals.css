@@ -4,11 +4,11 @@
 
 /* ---- Base ---------------------------------------------------------------- */
 :root {
-  --focus: #0d1424; /* focus ring colour on light surfaces */
+  --focus: #0b1421; /* focus ring colour on light surfaces */
 }
 /* Any dark surface switches the focus ring to paper. */
 .surface-dark {
-  --focus: #f3efe7;
+  --focus: #edf4fa;
 }
 
 html {
@@ -17,15 +17,15 @@ html {
 }
 
 body {
-  background: #f3efe7;
-  color: #0d1424;
+  background: #edf4fa;
+  color: #0b1421;
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: #b82333;
+  background: #c8372b;
   color: #fff;
 }
 
@@ -57,6 +57,21 @@ h1, h2, h3 {
   background-position: 100% 100%;
 }
 
+/* Nav links: no underline at rest; it draws in on hover/focus and stays on the current page. */
+.u-nav {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.2s;
+  padding-bottom: 2px;
+}
+.u-nav:hover,
+.u-nav:focus-visible,
+.u-nav[aria-current="page"] {
+  background-size: 100% 1px;
+}
+
 /* ---- Reveal (one subtle entrance, only when JS is available) -------------- */
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
   .reveal {
@@ -69,12 +84,13 @@ h1, h2, h3 {
     opacity: 1;
     transform: none;
   }
-  /* Image reveal: wipe open from the top. */
-  .reveal-img {
+  /* Image reveal: the OUTER element is observed (never clipped, so the observer can see it);
+     the INNER wrapper is what wipes open. Clipping the observed element itself hides it from the observer. */
+  .reveal-img-inner {
     clip-path: inset(0 0 100% 0);
     transition: clip-path 1s cubic-bezier(0.7, 0, 0.2, 1) var(--d, 0s);
   }
-  .reveal-img.is-in {
+  .reveal-img.is-in .reveal-img-inner {
     clip-path: inset(0 0 0 0);
   }
 }

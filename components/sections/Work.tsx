@@ -12,7 +12,7 @@ export function Work() {
       <Container className="pt-24 pb-24 sm:pt-32 sm:pb-32">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <SectionLabel index="01">Selected work</SectionLabel>
+            <SectionLabel index="01">Work</SectionLabel>
             <Reveal>
               <h2 id="work-heading" className="mt-6 text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none">
                 Selected work

@@ -45,7 +45,7 @@ export function Contact({ standalone }: { standalone?: boolean }) {
                 <Direct href={site.bookingUrl} icon={<CalendarDays className="h-5 w-5" />} label="Book a call" value="Pick a time" external />
               ) : (
                 isDev && (
-                  <li className="border-t border-night/20 py-3 font-mono text-xs text-red last:border-b">
+                  <li className="border-t border-night/20 py-3 font-mono text-xs text-red-dark last:border-b">
                     [add site.bookingUrl in lib/content.ts to show “Book a call”]
                   </li>
                 )

@@ -52,7 +52,7 @@ const SECTIONS: { key: keyof Project; title: string }[] = [
 
 function Prose({ text, big }: { text: string; big?: boolean }) {
   return (
-    <div className={cn("flex max-w-[62ch] flex-col gap-4 leading-relaxed", big ? "text-xl" : "text-lg text-night/85")}>
+    <div className={cn(big ? "text-xl" : "text-lg text-night/85", "flex max-w-[62ch] flex-col gap-4 leading-relaxed")}>
       {text.split(/\n\s*\n/).map((p, i) => (
         <p key={i}>{p}</p>
       ))}
@@ -92,7 +92,7 @@ function WriteUps({ project, energetic }: { project: Project; energetic: boolean
               energetic ? "text-3xl font-semibold sm:text-5xl" : "text-2xl font-semibold"
             )}
           >
-            {energetic && <span className="mb-3 block font-mono text-xs font-normal text-red-bright">{String(i + 1).padStart(2, "0")}</span>}
+            {energetic && <span className="mb-3 block font-mono text-xs font-normal text-blue">{String(i + 1).padStart(2, "0")}</span>}
             {s.title}
           </h2>
           <div className="md:col-span-8">
@@ -106,83 +106,74 @@ function WriteUps({ project, energetic }: { project: Project; energetic: boolean
   );
 }
 
+function MobilePair({ images, dark }: { images: ProjectImages["mobile"]; dark?: boolean }) {
+  const [m1, m2] = images;
+  if (!m1 && !m2) return null;
+  const sizes = "(min-width: 1024px) 300px, 45vw";
+  return (
+    <div className="grid max-w-xl grid-cols-2 gap-4 sm:gap-8 lg:col-span-6 lg:col-start-2">
+      {m1 && (
+        <Reveal variant="image">
+          <NaturalImage image={m1} dark={dark} sizes={sizes} />
+        </Reveal>
+      )}
+      {m2 && (
+        <Reveal variant="image" delay={0.1} className="mt-12">
+          <NaturalImage image={m2} dark={dark} sizes={sizes} />
+        </Reveal>
+      )}
+    </div>
+  );
+}
+
+/** Warm: calm, alternating left/right placement with generous space between screenshots. */
 function WarmGallery({ images }: { images: ProjectImages }) {
-  const [d1, d2] = images.desktop;
-  const [m1, m2] = images.mobile;
-  if (!d1 && !d2 && !m1 && !m2) return null;
-  const sizes = {
-    d1: "(min-width: 1280px) 800px, (min-width: 1024px) 66vw, 100vw",
-    d2: "(min-width: 1280px) 700px, (min-width: 1024px) 58vw, 100vw",
-    m: "(min-width: 1024px) 300px, 45vw",
-  };
+  if (images.desktop.length + images.mobile.length === 0) return null;
   return (
     <section aria-label="Screenshots" className="py-16 sm:py-24">
-      <div className="grid gap-y-14 lg:grid-cols-12">
-        {d1 && (
-          <Reveal variant="image" className="lg:col-span-8">
-            <NaturalImage image={d1} sizes={sizes.d1} />
+      <div className="grid gap-y-12 sm:gap-y-16 lg:grid-cols-12">
+        {images.desktop.map((img, i) => (
+          <Reveal
+            key={img.src}
+            variant="image"
+            className={i % 2 === 0 ? "lg:col-span-9" : "lg:col-span-9 lg:col-start-4"}
+          >
+            <NaturalImage image={img} sizes="(min-width: 1280px) 912px, (min-width: 1024px) 75vw, 100vw" />
           </Reveal>
-        )}
-        {d2 && (
-          <Reveal variant="image" className="lg:col-span-7 lg:col-start-6 lg:-mt-8">
-            <NaturalImage image={d2} sizes={sizes.d2} />
-          </Reveal>
-        )}
-        {(m1 || m2) && (
-          <div className="grid max-w-xl grid-cols-2 gap-4 sm:gap-8 lg:col-span-6 lg:col-start-2">
-            {m1 && (
-              <Reveal variant="image">
-                <NaturalImage image={m1} sizes={sizes.m} />
-              </Reveal>
-            )}
-            {m2 && (
-              <Reveal variant="image" delay={0.1} className="mt-12">
-                <NaturalImage image={m2} sizes={sizes.m} />
-              </Reveal>
-            )}
-          </div>
-        )}
+        ))}
+        <MobilePair images={images.mobile} />
       </div>
     </section>
   );
 }
 
+/** Energetic: larger scale, staggered, with each screenshot cutting into the previous one. */
 function EnergeticGallery({ images }: { images: ProjectImages }) {
-  const [d1, d2] = images.desktop;
-  const [m1, m2] = images.mobile;
-  if (!d1 && !d2 && !m1 && !m2) return null;
-  const sizes = {
-    d1: "(min-width: 1280px) 1000px, (min-width: 1024px) 75vw, 100vw",
-    d2: "(min-width: 1280px) 800px, (min-width: 1024px) 60vw, 100vw",
-    m: "(min-width: 1024px) 260px, 42vw",
-  };
+  if (images.desktop.length + images.mobile.length === 0) return null;
   return (
     <section aria-label="Screenshots" className="py-16 sm:py-28">
       <div className="grid grid-cols-12 gap-y-8">
-        {d1 && (
-          <Reveal variant="image" className="col-span-12 lg:col-span-10">
-            <NaturalImage image={d1} dark sizes={sizes.d1} />
+        {images.desktop.map((img, i) => (
+          <Reveal
+            key={img.src}
+            variant="image"
+            className={
+              i === 0
+                ? "col-span-12 lg:col-span-11"
+                : i % 2 === 1
+                  ? "relative z-10 col-span-11 col-start-2 lg:col-span-9 lg:col-start-4 lg:-mt-24"
+                  : "relative z-10 col-span-11 lg:col-span-10 lg:-mt-24"
+            }
+          >
+            <NaturalImage
+              image={img}
+              dark
+              sizes="(min-width: 1280px) 1000px, (min-width: 1024px) 80vw, 100vw"
+              className={i === 0 ? "" : "outline outline-[10px] outline-night"}
+            />
           </Reveal>
-        )}
-        {d2 && (
-          <Reveal variant="image" className="relative z-10 col-span-11 col-start-2 lg:col-span-8 lg:col-start-5 lg:-mt-28">
-            <NaturalImage image={d2} dark sizes={sizes.d2} className="outline outline-[10px] outline-night" />
-          </Reveal>
-        )}
-        {(m1 || m2) && (
-          <div className="relative z-20 col-span-12 flex items-end gap-4 sm:gap-8 lg:col-span-6 lg:-mt-40">
-            {m1 && (
-              <Reveal variant="image" className="w-[44%] max-w-[16.5rem]">
-                <NaturalImage image={m1} dark sizes={sizes.m} className="outline outline-[8px] outline-night" />
-              </Reveal>
-            )}
-            {m2 && (
-              <Reveal variant="image" delay={0.12} className="w-[44%] max-w-[16.5rem] translate-y-10">
-                <NaturalImage image={m2} dark sizes={sizes.m} className="outline outline-[8px] outline-night" />
-              </Reveal>
-            )}
-          </div>
-        )}
+        ))}
+        <MobilePair images={images.mobile} dark />
       </div>
     </section>
   );
@@ -249,13 +240,13 @@ export default async function CaseStudyPage({ params }: Params) {
             <h1 className="mt-4 text-[clamp(3.5rem,14vw,12rem)] font-semibold leading-[0.84] tracking-[-0.055em]">
               ZKR
               <br />
-              <span className="text-red-bright">Festival</span>
+              <span className="text-blue">Festival</span>
             </h1>
           ) : (
             <h1 className="mt-4 text-[clamp(3.25rem,11vw,9.5rem)] font-semibold leading-[0.9]">{project.title}</h1>
           )}
 
-          <p className={cn("mt-8 max-w-[44ch] leading-relaxed", energetic ? "text-xl text-paper/85 sm:text-2xl" : "text-xl text-night/80")}>
+          <p className={cn(energetic ? "text-xl text-paper/85 sm:text-2xl" : "text-xl text-night/80", "mt-8 max-w-[44ch] leading-relaxed")}>
             {project.description}
           </p>
         </Container>
@@ -269,7 +260,7 @@ export default async function CaseStudyPage({ params }: Params) {
             dark
             zoom={false}
             priority
-            hint={`public/projects/${project.slug}/cover.webp`}
+            fallback={{ index: num, category: project.category, hint: `public/projects/${project.slug}/cover.webp` }}
             aspect="aspect-[4/3] sm:aspect-[16/9] lg:aspect-[2.2/1]"
             sizes="100vw"
             className="border-x-0"
@@ -281,7 +272,7 @@ export default async function CaseStudyPage({ params }: Params) {
             image={images.cover}
             zoom={false}
             priority
-            hint={`public/projects/${project.slug}/cover.webp`}
+            fallback={{ index: num, category: project.category, hint: `public/projects/${project.slug}/cover.webp` }}
             aspect="aspect-[4/3] sm:aspect-[16/9]"
             sizes="(min-width: 1536px) 1408px, (min-width: 1280px) 1216px, 100vw"
           />

@@ -9,14 +9,14 @@ export const contentType = "image/png";
 export default function Image() {
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", background: "#0d1424", color: "#f3efe7", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: 72 }}>
+      <div style={{ width: "100%", height: "100%", background: "#0b1421", color: "#edf4fa", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: 72 }}>
         <div style={{ fontSize: 28, opacity: 0.7 }}>{site.region}</div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 200, fontWeight: 700, letterSpacing: -8, lineHeight: 1 }}>{site.name}</div>
           <div style={{ fontSize: 46, marginTop: 16 }}>{site.founder}</div>
           <div style={{ fontSize: 34, opacity: 0.7 }}>{site.role}</div>
         </div>
-        <div style={{ height: 8, width: 160, background: "#f2707a" }} />
+        <div style={{ height: 8, width: 160, background: "#ff7b6b" }} />
       </div>
     ),
     size

@@ -43,7 +43,7 @@ export default function AboutPage() {
                   I started ZKR to work directly with businesses and founders who care about the quality of what they put online.
                 </p>
                 {isDev && (
-                  <p className="mt-4 font-mono text-xs text-red">
+                  <p className="mt-4 font-mono text-xs text-red-dark">
                     [TODO(zakariaa): add your real bio in founder.bio — lib/content.ts. Only true facts.]
                   </p>
                 )}

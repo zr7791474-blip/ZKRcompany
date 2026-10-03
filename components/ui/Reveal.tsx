@@ -48,7 +48,7 @@ export function Reveal({
       className={cn(variant === "image" ? "reveal-img" : "reveal", className)}
       style={delay ? ({ "--d": `${delay}s` } as React.CSSProperties) : undefined}
     >
-      {children}
+      {variant === "image" ? <div className="reveal-img-inner">{children}</div> : children}
     </div>
   );
 }

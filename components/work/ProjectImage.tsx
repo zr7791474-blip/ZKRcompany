@@ -4,35 +4,16 @@ import type { ResolvedImage } from "@/lib/project-images";
 
 const isDev = process.env.NODE_ENV !== "production";
 
-/** Shown only when a screenshot file doesn't exist yet. In `next dev` it names the file to add. */
-export function ImagePlaceholder({
-  className,
-  hint,
-  dark,
-}: {
-  className?: string;
-  hint?: string;
-  dark?: boolean;
-}) {
-  const line = dark ? "rgb(243 239 231 / 0.10)" : "rgb(13 20 36 / 0.10)";
+/** Simple labelled frame (used for the portrait slot). Quiet in production, names the file in `next dev`. */
+export function ImagePlaceholder({ className, hint, label = "Photo coming soon" }: { className?: string; hint?: string; label?: string }) {
   return (
-    <div
-      className={cn(
-        "flex items-center justify-center border border-dashed",
-        dark ? "border-paper/30 bg-night-2 text-paper/70" : "border-night/30 bg-paper-deep text-night/70",
-        className
-      )}
-      style={{
-        backgroundImage: `linear-gradient(to right, ${line} 1px, transparent 1px), linear-gradient(to bottom, ${line} 1px, transparent 1px)`,
-        backgroundSize: "32px 32px",
-      }}
-    >
-      <p className="max-w-[30ch] px-4 text-center font-mono text-xs leading-relaxed">
-        Screenshot coming soon
+    <div className={cn("flex items-end border border-night/20 bg-paper-deep p-4 text-night/70", className)}>
+      <p className="font-mono text-xs leading-relaxed">
+        {label}
         {isDev && hint && (
           <>
             <br />
-            <span className={dark ? "text-red-bright" : "text-red"}>add: {hint}</span>
+            <span className="text-red-dark">add: {hint}</span>
           </>
         )}
       </p>
@@ -40,13 +21,62 @@ export function ImagePlaceholder({
   );
 }
 
-/** Fixed-aspect cropped image (cards, hero). Uses `fill` + sizes so the browser only fetches what it needs. */
+/**
+ * Shown while a project has no screenshot yet. It is deliberately NOT a fake screenshot:
+ * just the project's number, category and an honest "coming soon" label on a brand-coloured field.
+ */
+export function CoverFallback({
+  index,
+  category,
+  dark,
+  hint,
+  className,
+}: {
+  index: string;
+  category: string;
+  dark?: boolean;
+  hint?: string;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "relative overflow-hidden border",
+        dark ? "border-paper/20 bg-night-2 text-paper" : "border-night/20 bg-paper-deep text-night",
+        className
+      )}
+    >
+      <span className={cn("absolute left-5 top-0 h-1 w-14 sm:left-8", "bg-red")} aria-hidden />
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -bottom-[0.14em] -right-[0.03em] select-none font-display font-semibold leading-none tracking-[-0.06em] opacity-[0.07]"
+        style={{ fontSize: "min(46vw, 34rem)" }}
+      >
+        {index}
+      </span>
+      <div className="relative flex h-full flex-col justify-between p-5 pt-8 sm:p-8 sm:pt-10">
+        <p className="font-mono text-xs opacity-80">{category}</p>
+        <p className="font-mono text-xs opacity-80">
+          Screenshots coming soon
+          {isDev && hint && (
+            <>
+              <br />
+              <span className={dark ? "text-red-bright" : "text-red-dark"}>add: {hint}</span>
+            </>
+          )}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/** Fixed-aspect cropped image (cards, hero). `fill` + `sizes` so the browser only fetches what it needs. */
 export function CoverImage({
   image,
   aspect,
   sizes,
   priority = false,
-  hint,
+  fallback,
   dark,
   className,
   zoom = true,
@@ -55,39 +85,21 @@ export function CoverImage({
   aspect: string;
   sizes: string;
   priority?: boolean;
-  hint?: string;
+  fallback: { index: string; category: string; hint?: string };
   dark?: boolean;
   className?: string;
   zoom?: boolean;
 }) {
-  if (!image) return <ImagePlaceholder className={cn(aspect, className)} hint={hint} dark={dark} />;
+  if (!image) return <CoverFallback {...fallback} dark={dark} className={cn(aspect, className)} />;
   return (
-    <div
-      className={cn(
-        "relative overflow-hidden border",
-        dark ? "border-paper/20" : "border-night/20",
-        zoom && "img-zoom",
-        aspect,
-        className
-      )}
-    >
+    <div className={cn("relative overflow-hidden border", dark ? "border-paper/20" : "border-night/20", zoom && "img-zoom", aspect, className)}>
       <Image src={image.src} alt={image.alt} fill sizes={sizes} priority={priority} className="object-cover object-top" />
     </div>
   );
 }
 
 /** Natural-ratio image with the file's real width/height (no layout shift, no cropping). */
-export function NaturalImage({
-  image,
-  sizes,
-  dark,
-  className,
-}: {
-  image: ResolvedImage;
-  sizes: string;
-  dark?: boolean;
-  className?: string;
-}) {
+export function NaturalImage({ image, sizes, dark, className }: { image: ResolvedImage; sizes: string; dark?: boolean; className?: string }) {
   return (
     <div className={cn("img-zoom overflow-hidden", className)}>
       <Image

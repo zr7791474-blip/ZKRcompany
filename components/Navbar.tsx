@@ -67,7 +67,7 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               aria-current={isActive(link.href) ? "page" : undefined}
-              className={cn("u-link text-[15px]", isActive(link.href) ? "text-paper" : "text-paper/75 hover:text-paper")}
+              className={cn("u-nav text-[15px]", isActive(link.href) ? "text-paper" : "text-paper/75 hover:text-paper")}
             >
               {link.label}
             </Link>

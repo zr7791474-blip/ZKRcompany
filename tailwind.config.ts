@@ -1,21 +1,21 @@
 import type { Config } from "tailwindcss";
 
 /**
- * ZKR palette — deliberately small. One accent (red).
- *  night  : deep navy, almost black (dark surfaces, text on light)
- *  paper  : warm off-white (light surfaces, text on dark)
- *  blue   : muted blue, used rarely for secondary detail
- *  red    : ZKR red — the action colour. `red` on light surfaces, `red-bright` on dark.
+ * ZKR palette — taken from the hero photograph (long-exposure ice-blue on near-black, with two red dots).
+ *  night       : blue-black, from the photo's shadows (dark surfaces, text on light)
+ *  paper       : icy off-white, from the photo's highlights (light surfaces, text on dark)
+ *  blue        : the photo's electric blue, for accents on dark   |  blue-deep: same hue, for accents on light
+ *  red         : the photo's red dots — the ONE action colour (buttons, tiny accents)
  */
 const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        night: { DEFAULT: "#0d1424", 2: "#151f35" },
-        paper: { DEFAULT: "#f3efe7", deep: "#e8e1d2" },
-        blue: { DEFAULT: "#6f8dab", deep: "#3f5c7a" },
-        red: { DEFAULT: "#b82333", dark: "#9c1c2b", bright: "#f2707a" },
+        night: { DEFAULT: "#0b1421", 2: "#14202f" },
+        paper: { DEFAULT: "#edf4fa", deep: "#d6e5f2" },
+        blue: { DEFAULT: "#5db4e4", deep: "#1f6a99" },
+        red: { DEFAULT: "#c8372b", dark: "#a92b21", bright: "#ff7b6b" },
       },
       fontFamily: {
         display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],

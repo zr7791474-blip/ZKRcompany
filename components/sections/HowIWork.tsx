@@ -13,7 +13,7 @@ export function HowIWork() {
             id="how-heading"
             className="text-[clamp(2.25rem,4.6vw,3.75rem)] font-semibold leading-[1.02] lg:col-span-6"
           >
-            You work directly with the person who designs and builds the product.
+            How I work.
           </h2>
           <ul className="lg:col-span-6">
             {whyUs.map((item) => (

@@ -45,9 +45,10 @@ export function FeaturedProject({ project, index, layout, dark, headingLevel = "
     </Link>
   );
 
+  // Size first, line-height last: tailwind-merge drops an earlier `leading-*` when a `text-[…]` size follows it.
   const titleCls = cn(
-    "font-display font-semibold leading-[0.95]",
-    layout === "wide" ? "text-[clamp(2.75rem,7vw,6rem)]" : "text-[clamp(2.75rem,6vw,5.25rem)]"
+    layout === "wide" ? "text-[clamp(2.75rem,7vw,6rem)]" : "text-[clamp(2.75rem,6vw,5.25rem)]",
+    "font-display font-semibold leading-[0.95]"
   );
 
   if (layout === "wide") {
@@ -60,7 +61,7 @@ export function FeaturedProject({ project, index, layout, dark, headingLevel = "
           <Link href={href} tabIndex={-1} aria-hidden className="block">
             <CoverImage
               image={cover}
-              hint={hint}
+              fallback={{ index: num, category: project.category, hint }}
               dark={dark}
               aspect="aspect-[4/3] sm:aspect-[16/9] lg:aspect-[2/1]"
               sizes="(min-width: 1536px) 1408px, (min-width: 1280px) 1216px, 100vw"
@@ -108,9 +109,9 @@ export function FeaturedProject({ project, index, layout, dark, headingLevel = "
         <Link href={href} tabIndex={-1} aria-hidden className="block">
           <CoverImage
             image={cover}
-            hint={hint}
+            fallback={{ index: num, category: project.category, hint }}
             dark={dark}
-            aspect="aspect-[4/3] lg:aspect-[5/6]"
+            aspect="aspect-[16/10]"
             sizes="(min-width: 1280px) 700px, (min-width: 1024px) 58vw, 100vw"
           />
         </Link>

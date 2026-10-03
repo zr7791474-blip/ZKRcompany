@@ -16,6 +16,7 @@ npm run lint && npx tsc --noEmit && npm run build
 | The two featured projects + case-study text | `lib/projects.ts` |
 | Screenshots | `public/projects/zkr-coffee/` and `public/projects/zkr-festival/` (see README in each) |
 | Founder photo (optional) | `public/founder/portrait.webp` |
+| Hero background | `public/hero/hero.webp` (the palette in `tailwind.config.ts` is taken from this photo) |
 | Official portfolio link | `site.portfolioUrl` in `lib/content.ts` → https://zkrportfolio.vercel.app/ |
 | Colours / fonts | `tailwind.config.ts`, `app/globals.css`, `app/layout.tsx` |
 
