@@ -19,9 +19,9 @@ import type { Project } from "./projects";
 const ALT_EXTENSIONS = ["webp", "avif", "jpg", "jpeg", "png"];
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 
-export type ResolvedImage = { src: string; width: number; height: number; alt: string };
+export type ResolvedImage = { src: string; width: number; height: number; alt: string; caption?: string };
 
-function resolveOne(src: string, alt: string): ResolvedImage | undefined {
+function resolveOne(src: string, alt: string, caption?: string): ResolvedImage | undefined {
   const base = src.replace(/\.[a-z0-9]+$/i, "");
   for (const ext of [src.split(".").pop() ?? "webp", ...ALT_EXTENSIONS]) {
     const candidate = `${base}.${ext}`;
@@ -29,7 +29,7 @@ function resolveOne(src: string, alt: string): ResolvedImage | undefined {
       const file = path.join(PUBLIC_DIR, candidate);
       if (!fs.existsSync(file) || fs.statSync(file).size === 0) continue;
       const { width, height } = imageSize(fs.readFileSync(file));
-      if (width && height) return { src: candidate, width, height, alt };
+      if (width && height) return { src: candidate, width, height, alt, caption };
     } catch {
       /* unreadable → try next / treat as missing */
     }
@@ -47,7 +47,8 @@ const nameOf = (src: string) => path.basename(src).replace(/\.[a-z0-9]+$/i, "");
 
 export function resolveProjectImages(project: Project): ProjectImages {
   const alt = (src: string, fallback: string) => project.alts?.[nameOf(src)] ?? fallback;
-  const cover = resolveOne(project.heroImage, alt(project.heroImage, `${project.title} — cover screenshot`));
+  const cap = (src: string) => project.captions?.[nameOf(src)];
+  const cover = resolveOne(project.heroImage, alt(project.heroImage, `${project.title} — cover screenshot`), cap(project.heroImage));
 
   const desktop: ResolvedImage[] = [];
   const mobile: ResolvedImage[] = [];
@@ -55,7 +56,7 @@ export function resolveProjectImages(project: Project): ProjectImages {
     const n = nameOf(src);
     const label = n.startsWith("mobile") ? "mobile screenshot" : "desktop screenshot";
     const num = n.match(/\d+/)?.[0];
-    const img = resolveOne(src, alt(src, `${project.title} — ${label}${num ? ` ${Number(num)}` : ""}`));
+    const img = resolveOne(src, alt(src, `${project.title} — ${label}${num ? ` ${Number(num)}` : ""}`), cap(src));
     if (img) (n.startsWith("mobile") ? mobile : desktop).push(img);
   });
   return { cover, desktop, mobile };

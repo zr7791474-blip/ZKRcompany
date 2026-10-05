@@ -14,8 +14,8 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const { slug } = await params;
   const p = getProject(slug);
   const dark = p?.variant !== "warm";
-  const bg = dark ? "#0b1421" : "#edf4fa";
-  const fg = dark ? "#edf4fa" : "#0b1421";
+  const bg = dark ? "#070e18" : "#eaf2f8";
+  const fg = dark ? "#e8f1f9" : "#08111e";
   return new ImageResponse(
     (
       <div style={{ width: "100%", height: "100%", background: bg, color: fg, display: "flex", flexDirection: "column", justifyContent: "space-between", padding: 72 }}>
@@ -26,7 +26,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             <span>{site.name} — {site.founder}</span>
             <span style={{ opacity: 0.7 }}>{site.role}</span>
           </div>
-          <div style={{ height: 8, width: 160, background: dark ? "#ff7b6b" : "#c8372b" }} />
+          <div style={{ height: 8, width: 160, background: "#c8372b" }} />
         </div>
       </div>
     ),

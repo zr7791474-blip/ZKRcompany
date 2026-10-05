@@ -5,7 +5,6 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionLabel } from "@/components/ui/SectionLabel";
 import { CoverImage, NaturalImage } from "@/components/work/ProjectImage";
 import { SpecList, todoValue } from "@/components/work/Spec";
 import { getProject, projects, type Project } from "@/lib/projects";
@@ -52,7 +51,7 @@ const SECTIONS: { key: keyof Project; title: string }[] = [
 
 function Prose({ text, big }: { text: string; big?: boolean }) {
   return (
-    <div className={cn(big ? "text-xl" : "text-lg text-night/85", "flex max-w-[62ch] flex-col gap-4 leading-relaxed")}>
+    <div className={cn(big ? "text-xl" : "text-lg text-fg/85", "flex max-w-[62ch] flex-col gap-4 leading-relaxed")}>
       {text.split(/\n\s*\n/).map((p, i) => (
         <p key={i}>{p}</p>
       ))}
@@ -66,10 +65,10 @@ function WriteUps({ project, energetic }: { project: Project; energetic: boolean
 
   if (filled.length === 0) {
     return (
-      <p className={cn("max-w-[56ch] text-lg", energetic ? "text-paper/80" : "text-night/80")}>
+      <p className="max-w-[56ch] text-lg text-fg/80">
         The full write-up for this project is coming soon.
         {isDev && (
-          <span className="mt-3 block font-mono text-xs text-red-bright">
+          <span className="mt-3 block font-mono text-xs text-danger">
             [fill any of: {missing.map((m) => m.key).join(", ")}, outcome — in lib/projects.ts. Sections appear automatically.]
           </span>
         )}
@@ -83,7 +82,7 @@ function WriteUps({ project, energetic }: { project: Project; energetic: boolean
           key={s.key}
           className={cn(
             "grid gap-5 border-t py-10 md:grid-cols-12 md:gap-10",
-            energetic ? "border-paper/20 md:py-14" : "border-night/20"
+            energetic ? "border-fg/20 md:py-14" : "border-fg/20"
           )}
         >
           <h2
@@ -92,7 +91,7 @@ function WriteUps({ project, energetic }: { project: Project; energetic: boolean
               energetic ? "text-3xl font-semibold sm:text-5xl" : "text-2xl font-semibold"
             )}
           >
-            {energetic && <span className="mb-3 block font-mono text-xs font-normal text-blue">{String(i + 1).padStart(2, "0")}</span>}
+            {energetic && <span className="t-meta mb-3 block font-normal text-accent">{String(i + 1).padStart(2, "0")}</span>}
             {s.title}
           </h2>
           <div className="md:col-span-8">
@@ -106,7 +105,7 @@ function WriteUps({ project, energetic }: { project: Project; energetic: boolean
   );
 }
 
-function MobilePair({ images, dark }: { images: ProjectImages["mobile"]; dark?: boolean }) {
+function MobilePair({ images }: { images: ProjectImages["mobile"] }) {
   const [m1, m2] = images;
   if (!m1 && !m2) return null;
   const sizes = "(min-width: 1024px) 300px, 45vw";
@@ -114,12 +113,12 @@ function MobilePair({ images, dark }: { images: ProjectImages["mobile"]; dark?: 
     <div className="grid max-w-xl grid-cols-2 gap-4 sm:gap-8 lg:col-span-6 lg:col-start-2">
       {m1 && (
         <Reveal variant="image">
-          <NaturalImage image={m1} dark={dark} sizes={sizes} />
+          <NaturalImage image={m1} sizes={sizes} />
         </Reveal>
       )}
       {m2 && (
         <Reveal variant="image" delay={0.1} className="mt-12">
-          <NaturalImage image={m2} dark={dark} sizes={sizes} />
+          <NaturalImage image={m2} sizes={sizes} />
         </Reveal>
       )}
     </div>
@@ -138,7 +137,7 @@ function WarmGallery({ images }: { images: ProjectImages }) {
             variant="image"
             className={i % 2 === 0 ? "lg:col-span-9" : "lg:col-span-9 lg:col-start-4"}
           >
-            <NaturalImage image={img} sizes="(min-width: 1280px) 912px, (min-width: 1024px) 75vw, 100vw" />
+            <NaturalImage image={img} figure={`Fig. ${String(i + 1).padStart(2, "0")}`} sizes="(min-width: 1280px) 912px, (min-width: 1024px) 75vw, 100vw" />
           </Reveal>
         ))}
         <MobilePair images={images.mobile} />
@@ -167,13 +166,13 @@ function EnergeticGallery({ images }: { images: ProjectImages }) {
           >
             <NaturalImage
               image={img}
-              dark
+              figure={`Fig. ${String(i + 1).padStart(2, "0")}`}
               sizes="(min-width: 1280px) 1000px, (min-width: 1024px) 80vw, 100vw"
-              className={i === 0 ? "" : "outline outline-[10px] outline-night"}
+              className={i === 0 ? "" : "outline outline-[10px] outline-bg"}
             />
           </Reveal>
         ))}
-        <MobilePair images={images.mobile} dark />
+        <MobilePair images={images.mobile} />
       </div>
     </section>
   );
@@ -214,7 +213,7 @@ export default async function CaseStudyPage({ params }: Params) {
   ];
 
   return (
-    <div className={cn(energetic ? "surface-dark bg-night text-paper" : "bg-paper text-night")}>
+    <div className={cn(energetic ? "surface-dark bg-bg/[var(--island-a)] text-fg" : "text-fg")}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
 
       {/* ---- Header ---- */}
@@ -232,21 +231,21 @@ export default async function CaseStudyPage({ params }: Params) {
             </ol>
           </nav>
 
-          <SectionLabel index={num} dark={energetic} className="mt-10">
-            {project.title}
-          </SectionLabel>
+          <p className="t-meta mt-10 text-fg/65">
+            <span className="text-accent">Project {num}</span> / {String(projects.length).padStart(2, "0")}
+          </p>
 
           {energetic ? (
-            <h1 className="mt-4 text-[clamp(3.5rem,14vw,12rem)] font-semibold leading-[0.84] tracking-[-0.055em]">
+            <h1 className="mt-4 text-[clamp(3.5rem,14vw,12rem)] leading-[0.84] tracking-[-0.055em]">
               ZKR
               <br />
-              <span className="text-blue">Festival</span>
+              <span className="text-accent">Festival</span>
             </h1>
           ) : (
-            <h1 className="mt-4 text-[clamp(3.25rem,11vw,9.5rem)] font-semibold leading-[0.9]">{project.title}</h1>
+            <h1 className="mt-4 text-[clamp(3.25rem,11vw,9.5rem)] leading-[0.9]">{project.title}</h1>
           )}
 
-          <p className={cn(energetic ? "text-xl text-paper/85 sm:text-2xl" : "text-xl text-night/80", "mt-8 max-w-[44ch] leading-relaxed")}>
+          <p className={cn(energetic ? "text-xl sm:text-2xl" : "text-xl", "text-fg/85 mt-8 max-w-[44ch] leading-relaxed")}>
             {project.description}
           </p>
         </Container>
@@ -257,7 +256,6 @@ export default async function CaseStudyPage({ params }: Params) {
         <div>
           <CoverImage
             image={images.cover}
-            dark
             zoom={false}
             priority
             fallback={{ index: num, category: project.category, hint: `public/projects/${project.slug}/cover.webp` }}
@@ -280,11 +278,11 @@ export default async function CaseStudyPage({ params }: Params) {
       )}
 
       {/* ---- Spec + write-up ---- */}
-      <Container className="py-16 sm:py-24">
+      <Container surface className="py-16 sm:py-24">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <aside className="lg:col-span-4">
             <div className="lg:sticky lg:top-24">
-              <SpecList items={spec} dark={energetic} />
+              <SpecList items={spec} />
               {links.length > 0 && (
                 <ul className="mt-6 flex flex-col gap-3">
                   {links.map((l) => (
@@ -310,16 +308,16 @@ export default async function CaseStudyPage({ params }: Params) {
       </Container>
 
       {/* ---- Screens ---- */}
-      <Container>{energetic ? <EnergeticGallery images={images} /> : <WarmGallery images={images} />}</Container>
+      <Container surface>{energetic ? <EnergeticGallery images={images} /> : <WarmGallery images={images} />}</Container>
 
       {/* ---- Next project + CTA ---- */}
-      <section className={cn("border-t", energetic ? "border-paper/20" : "border-night/20")}>
+      <section className={"border-t border-fg/20"}>
         <Container className="grid gap-14 py-20 sm:py-28 md:grid-cols-2">
           <div>
             <p className="font-mono text-xs opacity-70">Next project</p>
             <Link
               href={`/work/${next.slug}`}
-              className="u-link group mt-4 inline-flex items-center gap-4 font-display text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none"
+              className="u-link group mt-4 inline-flex items-center gap-4 font-display text-[clamp(2.25rem,5vw,4rem)] leading-none"
             >
               {next.title}
               <ArrowRight className="h-8 w-8 transition-transform group-hover:translate-x-1" aria-hidden />
@@ -328,7 +326,7 @@ export default async function CaseStudyPage({ params }: Params) {
           </div>
           <div>
             <p className="font-mono text-xs opacity-70">Working with me</p>
-            <p className="mt-4 max-w-[34ch] font-display text-3xl font-semibold leading-tight">
+            <p className="mt-4 max-w-[34ch] font-display text-3xl leading-tight">
               You work directly with the person who designs and builds the product.
             </p>
             <ButtonLink href="/contact" className="mt-8">

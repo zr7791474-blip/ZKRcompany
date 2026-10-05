@@ -26,6 +26,8 @@ export type Project = {
   images: string[];
   /** Optional alt text overrides keyed by file name without extension (e.g. "desktop-01"). */
   alts?: Record<string, string>;
+  /** Short editorial figure captions keyed by file name without extension (shown under case-study images). */
+  captions?: Record<string, string>;
   overview?: string;
   challenge?: string;
   approach?: string;
@@ -65,6 +67,13 @@ export const projects: Project[] = [
       "desktop-03": "ZKR Coffee about section, “Where Craft Meets Devotion”, with the brand story and a bag of beans.",
       "desktop-04": "ZKR Coffee “From Farm to Cup” timeline of the steps from farm to serving.",
     },
+    captions: {
+      cover: "Homepage hero",
+      "desktop-01": "Curated coffee selection",
+      "desktop-02": "The ZKRCoffee difference",
+      "desktop-03": "Brand story",
+      "desktop-04": "From farm to cup",
+    },
     overview: "ZKR Coffee is a coffee brand based in Casablanca. This is its website, which I designed and built.",
     built:
       "A dark, warm-toned site with a full-screen hero, a curated coffee selection with prices in MAD, a section on what makes the coffee different, the brand story, and a farm-to-cup timeline. The navigation covers Home, Menu, Coffee, About, Gallery, Testimonials, FAQ and Contact, with an Order now button.",
@@ -92,6 +101,12 @@ export const projects: Project[] = [
       "desktop-01": "ZKR Festival “Meet the Lineup” section: a grid of artist cards with genre tags and stages.",
       "desktop-02": "ZKR Festival “The Experience” section: a large stage photo with a thumbnail carousel.",
       "desktop-03": "ZKR Festival “The Gallery” section: a masonry grid of festival photos.",
+    },
+    captions: {
+      cover: "Homepage hero",
+      "desktop-01": "Meet the lineup",
+      "desktop-02": "The experience",
+      "desktop-03": "The gallery",
     },
     overview: "ZKR Festival is a festival and event platform website that I designed and built.",
     built:

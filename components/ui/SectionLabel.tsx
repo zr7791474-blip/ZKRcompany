@@ -1,20 +1,10 @@
 import { cn } from "@/lib/utils";
 
-/** Numbered section marker: "02 / Services". Sentence-case mono, no pill. `dark` for dark surfaces. */
-export function SectionLabel({
-  index,
-  children,
-  dark,
-  className,
-}: {
-  index: string;
-  children: React.ReactNode;
-  dark?: boolean;
-  className?: string;
-}) {
+/** Numbered section marker: "02 / Services". Micro mono label, number in the accent colour. */
+export function SectionLabel({ index, children, className }: { index: string; children: React.ReactNode; className?: string }) {
   return (
-    <p className={cn("font-mono text-xs", dark ? "text-paper/70" : "text-night/70", className)}>
-      <span className={dark ? "text-blue" : "text-blue-deep"}>{index}</span> / {children}
+    <p className={cn("t-meta text-fg/65", className)}>
+      <span className="text-accent">{index}</span> / {children}
     </p>
   );
 }

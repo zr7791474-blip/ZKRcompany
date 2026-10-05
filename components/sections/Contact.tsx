@@ -8,7 +8,7 @@ const isDev = process.env.NODE_ENV !== "production";
 
 function Direct({ href, icon, label, value, external }: { href: string; icon: React.ReactNode; label: string; value: string; external?: boolean }) {
   return (
-    <li className="border-t border-night/20 last:border-b">
+    <li className="border-t border-fg/20 last:border-b">
       <a
         href={href}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
@@ -16,7 +16,7 @@ function Direct({ href, icon, label, value, external }: { href: string; icon: Re
       >
         <span aria-hidden>{icon}</span>
         <span>
-          <span className="block font-mono text-xs text-night/70">{label}</span>
+          <span className="block font-mono text-xs text-fg/70">{label}</span>
           <span className="u-link text-lg font-medium">{value}</span>
         </span>
       </a>
@@ -26,15 +26,15 @@ function Direct({ href, icon, label, value, external }: { href: string; icon: Re
 
 export function Contact({ standalone }: { standalone?: boolean }) {
   return (
-    <section id="contact" aria-labelledby="contact-heading" className={standalone ? "" : "border-t border-night/15"}>
+    <section id="contact" aria-labelledby="contact-heading" className={standalone ? "bg-bg/80" : "border-t border-fg/15"}>
       <Container className={standalone ? "py-16 sm:py-24" : "py-24 sm:py-32"}>
         {!standalone && <SectionLabel index="07">Contact</SectionLabel>}
         <div className={`grid gap-14 lg:grid-cols-12 lg:gap-16 ${standalone ? "" : "mt-6"}`}>
           <div className="lg:col-span-5">
-            <h2 id="contact-heading" className="text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none">
+            <h2 id="contact-heading" className="text-[clamp(2.25rem,5vw,4rem)] leading-none">
               Start a project
             </h2>
-            <p className="mt-6 max-w-[40ch] text-lg text-night/80">
+            <p className="mt-6 max-w-[40ch] text-lg text-fg/80">
               Tell me what you&apos;re building. You&apos;ll hear back from me directly.
             </p>
             <ul className="mt-10">
@@ -45,7 +45,7 @@ export function Contact({ standalone }: { standalone?: boolean }) {
                 <Direct href={site.bookingUrl} icon={<CalendarDays className="h-5 w-5" />} label="Book a call" value="Pick a time" external />
               ) : (
                 isDev && (
-                  <li className="border-t border-night/20 py-3 font-mono text-xs text-red-dark last:border-b">
+                  <li className="border-t border-fg/20 py-3 font-mono text-xs text-danger last:border-b">
                     [add site.bookingUrl in lib/content.ts to show “Book a call”]
                   </li>
                 )

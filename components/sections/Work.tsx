@@ -14,10 +14,10 @@ export function Work() {
           <div>
             <SectionLabel index="01">Work</SectionLabel>
             <Reveal>
-              <h2 id="work-heading" className="mt-6 text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none">
+              <h2 id="work-heading" className="mt-6 text-[clamp(2.25rem,5vw,4rem)] leading-none">
                 Selected work
               </h2>
-              <p className="mt-4 text-lg text-night/70">02 projects I&apos;ve designed and built.</p>
+              <p className="mt-4 text-lg text-fg/70">02 projects I&apos;ve designed and built.</p>
             </Reveal>
           </div>
           <Link href="/work" className="u-link group inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold">
@@ -31,9 +31,9 @@ export function Work() {
       </Container>
 
       {/* Full-bleed dark band so the second project has a different composition and atmosphere. */}
-      <div className="surface-dark bg-night text-paper">
+      <div className="surface-dark border-t border-fg/15 bg-bg/[var(--island-a)] text-fg">
         <Container className="py-24 sm:py-32">
-          <FeaturedProject project={projects[1]} index={2} layout="split" dark />
+          <FeaturedProject project={projects[1]} index={2} layout="split" />
         </Container>
       </div>
     </section>

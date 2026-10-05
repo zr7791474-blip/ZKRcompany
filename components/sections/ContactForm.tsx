@@ -10,7 +10,7 @@ const budgets = ["Under $2,000", "$2,000 – $5,000", "$5,000 – $10,000", "$10
 const timelines = ["As soon as possible", "Within 1–2 months", "3+ months", "Flexible"];
 
 const field =
-  "mt-2 block min-h-12 w-full rounded-sm border border-night/60 bg-paper px-3 py-2.5 text-base text-night placeholder:text-night/60";
+  "mt-2 block min-h-12 w-full rounded-sm border border-fg/60 bg-bg px-3 py-2.5 text-base text-fg placeholder:text-fg/60";
 const labelCls = "block text-[15px] font-medium";
 
 export function ContactForm() {
@@ -94,7 +94,7 @@ export function ContactForm() {
         </label>
         <input id="cf-name" name="name" type="text" autoComplete="name" required aria-required="true"
           aria-invalid={!!err("name")} aria-describedby={describe("name")} className={field} />
-        {err("name") && <p id="name-error" className="mt-1 text-sm text-red-dark">{err("name")}</p>}
+        {err("name") && <p id="name-error" className="mt-1 text-sm text-danger">{err("name")}</p>}
       </div>
 
       <div>
@@ -103,7 +103,7 @@ export function ContactForm() {
         </label>
         <input id="cf-email" name="email" type="email" autoComplete="email" required aria-required="true"
           aria-invalid={!!err("email")} aria-describedby={describe("email")} className={field} />
-        {err("email") && <p id="email-error" className="mt-1 text-sm text-red-dark">{err("email")}</p>}
+        {err("email") && <p id="email-error" className="mt-1 text-sm text-danger">{err("email")}</p>}
       </div>
 
       <div>
@@ -144,7 +144,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="cf-website" className={labelCls}>
-          Current website <span className="font-normal text-night/70">(optional)</span>
+          Current website <span className="font-normal text-fg/70">(optional)</span>
         </label>
         <input id="cf-website" name="website" type="url" inputMode="url" autoComplete="url" placeholder="https://" className={field} />
       </div>
@@ -155,7 +155,7 @@ export function ContactForm() {
         </label>
         <textarea id="cf-message" name="message" rows={6} required aria-required="true"
           aria-invalid={!!err("message")} aria-describedby={describe("message")} className={field} />
-        {err("message") && <p id="message-error" className="mt-1 text-sm text-red-dark">{err("message")}</p>}
+        {err("message") && <p id="message-error" className="mt-1 text-sm text-danger">{err("message")}</p>}
       </div>
 
       <div className="sm:col-span-2">
@@ -169,8 +169,8 @@ export function ContactForm() {
 
         {/* Always rendered so screen readers announce changes. */}
         <div role="status" aria-live="polite" className="mt-5 text-[15px]">
-          {status === "sent" && <p className="border-l-2 border-night pl-4">{message}</p>}
-          {status === "idle" && message && <p className="text-red-dark">{message}</p>}
+          {status === "sent" && <p className="border-l-2 border-fg pl-4">{message}</p>}
+          {status === "idle" && message && <p className="text-danger">{message}</p>}
         </div>
         <div role="alert" className="text-[15px]">
           {status === "failed" && (

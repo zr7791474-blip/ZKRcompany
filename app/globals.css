@@ -2,47 +2,140 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ---- Base ---------------------------------------------------------------- */
+/* ==========================================================================
+   1. TOKENS — one variable set per theme. `.surface-dark` forces the dark set inside a section.
+   ========================================================================== */
 :root {
-  --focus: #0b1421; /* focus ring colour on light surfaces */
+  /* light: icy paper, ink-navy text */
+  --bg: 234 242 248;
+  --surface: 219 231 241;
+  --fg: 8 17 30;
+  --accent: 18 95 150;
+  --danger: 169 43 33;
+  --veil: 234 242 248; /* colour laid over the fixed photograph */
+  --focus: 8 17 30;
+  --veil-a: 0.5;
+  /* opacity of forced-dark sections: near-opaque on the pale light-mode photo (else they turn muddy grey) */
+  --island-a: 0.96;
+  color-scheme: light;
 }
-/* Any dark surface switches the focus ring to paper. */
+.dark,
 .surface-dark {
-  --focus: #edf4fa;
+  /* dark: near-black navy, icy text, electric-blue accent */
+  --bg: 7 14 24;
+  --surface: 13 24 38;
+  --fg: 232 241 249;
+  --accent: 98 186 238;
+  --danger: 255 123 107;
+  --veil: 5 11 19;
+  --focus: 232 241 249;
+}
+.dark {
+  color-scheme: dark;
+  --island-a: 0.84; /* on the dark photo the section can stay translucent, so the image keeps participating */
 }
 
+/* ==========================================================================
+   2. BASE
+   ========================================================================== */
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+  background: rgb(var(--bg));
 }
-
 body {
-  background: #edf4fa;
-  color: #0b1421;
+  background: transparent; /* the fixed photograph sits behind everything */
+  color: rgb(var(--fg));
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  font-feature-settings: "ss01", "cv11";
+  font-stretch: 100%;
+  font-feature-settings: "ss01";
   -webkit-font-smoothing: antialiased;
 }
-
 ::selection {
   background: #c8372b;
   color: #fff;
 }
-
 :focus-visible {
-  outline: 2px solid var(--focus);
+  outline: 2px solid rgb(var(--focus));
   outline-offset: 3px;
 }
 
+/* Type scale. One family; the width axis does the display work. Weight stays light-ish: wide + heavy gets loud. */
+p, li, dd {
+  text-wrap: pretty;
+}
 h1, h2, h3 {
-  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
-  letter-spacing: -0.03em;
+  font-weight: 540;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
+h1 { font-stretch: 112%; }
+h2 { font-stretch: 108%; }
+h3 { font-stretch: 104%; }
+@media (min-width: 768px) {
+  h1 { font-stretch: 124%; letter-spacing: -0.045em; }
+  h2 { font-stretch: 116%; letter-spacing: -0.04em; }
+  h3 { font-stretch: 108%; }
+}
+.t-meta {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
 
-/* ---- Components ---------------------------------------------------------- */
+/* ==========================================================================
+   3. FIXED BACKGROUND SYSTEM (layers, back to front)
+      photo → veil (theme colour, strength follows scroll) → scrim (reading side)
+   ========================================================================== */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  background: rgb(var(--bg));
+  pointer-events: none;
+}
+.site-bg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 42%;
+}
+/* Light theme: invert the photograph (white-on-black becomes ink-on-paper), keeping hues so the red points stay red. */
+:root:not(.dark) .site-bg img {
+  filter: invert(1) hue-rotate(180deg) saturate(1.45) contrast(1.05);
+}
+.site-bg__veil {
+  position: absolute;
+  inset: 0;
+  background: rgb(var(--veil) / var(--veil-a));
+  transition: background-color 0.4s ease;
+}
+.site-bg__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(var(--veil) / 0.78) 0%, rgb(var(--veil) / 0.35) 45%, rgb(var(--veil) / 0.7) 100%);
+}
+@media (min-width: 768px) {
+  .site-bg__scrim {
+    background: linear-gradient(90deg, rgb(var(--veil) / 0.92) 0%, rgb(var(--veil) / 0.72) 42%, rgb(var(--veil) / 0) 82%);
+  }
+}
 
-/* Underline that draws in on hover/focus (links and "text" buttons). */
+/* Navbar surface: translucent over the photo at the very top, solid once content scrolls underneath. */
+.site-nav {
+  background: rgb(var(--bg) / calc(0.5 + 0.5 * var(--nav-a, 0)));
+  transition: background-color 0.3s ease;
+}
+
+/* ==========================================================================
+   4. INTERACTION
+   ========================================================================== */
+/* Underline that draws out on hover (links with an affordance at rest). */
 .u-link {
   background-image: linear-gradient(currentColor, currentColor);
   background-repeat: no-repeat;
@@ -56,15 +149,14 @@ h1, h2, h3 {
   background-size: 0% 1px;
   background-position: 100% 100%;
 }
-
-/* Nav links: no underline at rest; it draws in on hover/focus and stays on the current page. */
+/* Nav links: nothing at rest; underline draws in on hover/focus and stays on the current page. */
 .u-nav {
   background-image: linear-gradient(currentColor, currentColor);
   background-repeat: no-repeat;
   background-position: 0 100%;
   background-size: 0% 1px;
   transition: background-size 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.2s;
-  padding-bottom: 2px;
+  padding-bottom: 3px;
 }
 .u-nav:hover,
 .u-nav:focus-visible,
@@ -72,20 +164,17 @@ h1, h2, h3 {
   background-size: 100% 1px;
 }
 
-/* ---- Reveal (one subtle entrance, only when JS is available) -------------- */
+/* One restrained entrance. Image reveal: the OUTER element is observed (never clipped) and the INNER wipes open. */
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
   .reveal {
     opacity: 0;
     transform: translateY(14px);
-    transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s),
-      transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s);
+    transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s);
   }
   .reveal.is-in {
     opacity: 1;
     transform: none;
   }
-  /* Image reveal: the OUTER element is observed (never clipped, so the observer can see it);
-     the INNER wrapper is what wipes open. Clipping the observed element itself hides it from the observer. */
   .reveal-img-inner {
     clip-path: inset(0 0 100% 0);
     transition: clip-path 1s cubic-bezier(0.7, 0, 0.2, 1) var(--d, 0s);
@@ -95,7 +184,7 @@ h1, h2, h3 {
   }
 }
 
-/* Hover image movement: slow, small, on the image only. */
+/* Image hover: slow, small, on the image only. */
 @media (prefers-reduced-motion: no-preference) {
   .img-zoom img {
     transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -106,8 +195,22 @@ h1, h2, h3 {
   }
 }
 
+/* Theme switch: a short cross-fade of colours, added only while toggling. */
+@media (prefers-reduced-motion: no-preference) {
+  .theme-fade,
+  .theme-fade *,
+  .theme-fade *::before,
+  .theme-fade *::after {
+    transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, fill 0.35s ease, stroke 0.35s ease !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .site-bg__veil,
+  .site-nav {
+    transition: none;
   }
 }

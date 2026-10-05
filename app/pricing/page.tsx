@@ -19,12 +19,12 @@ export default function PricingPage() {
         title="Prices on the page."
         description="Three starting points. Every project is scoped and priced with you before work begins."
       />
-      <Container className="py-16 sm:py-24">
+      <Container surface className="py-16 sm:py-24">
         <PricingRows detailed />
-        <div className="mt-10 max-w-[62ch] border-l-2 border-night pl-5">
+        <div className="mt-10 max-w-[62ch] border-l-2 border-fg pl-5">
           <p className="text-lg">{pricingNote}</p>
           {isDev && (
-            <p className="mt-3 font-mono text-xs text-red-dark">
+            <p className="mt-3 font-mono text-xs text-danger">
               [TODO(zakariaa): add a short “not included” list (e.g. hosting, domains) — only what is actually true — in lib/content.ts]
             </p>
           )}

@@ -9,17 +9,14 @@ export function todoValue(field: string) {
 
 export type SpecItem = { label: string; value: React.ReactNode | null };
 
-/** Engineering-notebook metadata: small mono keys, hairline rows. Rows with no value are skipped. */
-export function SpecList({ items, dark, className }: { items: SpecItem[]; dark?: boolean; className?: string }) {
+/** Engineering-notebook metadata: micro mono keys, hairline rows. Rows with no value are skipped. */
+export function SpecList({ items, className }: { items: SpecItem[]; className?: string }) {
   const rows = items.filter((i) => i.value);
   return (
-    <dl className={cn("border-t", dark ? "border-paper/20" : "border-night/20", className)}>
+    <dl className={cn("border-t border-fg/25", className)}>
       {rows.map((item) => (
-        <div
-          key={item.label}
-          className={cn("grid grid-cols-[6rem_1fr] gap-4 border-b py-3 text-[15px]", dark ? "border-paper/20" : "border-night/20")}
-        >
-          <dt className={cn("pt-0.5 font-mono text-xs", dark ? "text-paper/70" : "text-night/70")}>{item.label}</dt>
+        <div key={item.label} className="grid grid-cols-[6rem_1fr] gap-4 border-b border-fg/25 py-3 text-[15px]">
+          <dt className="t-meta pt-1 text-fg/65">{item.label}</dt>
           <dd>{item.value}</dd>
         </div>
       ))}

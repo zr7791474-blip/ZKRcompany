@@ -18,12 +18,12 @@ export default function WorkPage() {
         title="Two projects, shown properly."
         description="Each one has its own case study. I designed and built both."
       />
-      <Container className="py-20 sm:py-28">
+      <Container surface className="py-20 sm:py-28">
         <FeaturedProject project={projects[0]} index={1} layout="wide" headingLevel="h2" />
       </Container>
-      <div className="surface-dark bg-night text-paper">
+      <div className="surface-dark border-t border-fg/15 bg-bg/[var(--island-a)] text-fg">
         <Container className="py-20 sm:py-28">
-          <FeaturedProject project={projects[1]} index={2} layout="split" dark headingLevel="h2" />
+          <FeaturedProject project={projects[1]} index={2} layout="split" headingLevel="h2" />
         </Container>
       </div>
     </>

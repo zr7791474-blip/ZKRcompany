@@ -9,20 +9,20 @@ export const pricingNote =
 
 export function PricingRows({ detailed }: { detailed?: boolean }) {
   return (
-    <ul className="border-t border-night/20">
+    <ul className="border-t border-fg/20">
       {pricing.map((tier) => (
-        <li key={tier.name} className="grid gap-5 border-b border-night/20 py-8 sm:py-10 lg:grid-cols-12 lg:gap-10">
-          <h3 className="text-3xl font-semibold lg:col-span-3">{tier.name}</h3>
+        <li key={tier.name} className="grid gap-5 border-b border-fg/20 py-8 sm:py-10 lg:grid-cols-12 lg:gap-10">
+          <h3 className="text-3xl lg:col-span-3">{tier.name}</h3>
           <p className="lg:col-span-3">
-            <span className="font-display text-4xl font-semibold tracking-tight">{tier.price}</span>
-            <span className="ml-2 font-mono text-xs text-night/70">{tier.note}</span>
+            <span className="font-display text-4xl tracking-tight">{tier.price}</span>
+            <span className="ml-2 font-mono text-xs text-fg/70">{tier.note}</span>
           </p>
           <div className="lg:col-span-6">
-            <p className="max-w-[46ch] text-lg text-night/80">{tier.description}</p>
+            <p className="max-w-[46ch] text-lg text-fg/80">{tier.description}</p>
             {detailed && (
               <ul className="mt-5 grid max-w-xl gap-x-8 text-[15px] sm:grid-cols-2">
                 {tier.features.map((f) => (
-                  <li key={f} className="border-t border-night/10 py-2">
+                  <li key={f} className="border-t border-fg/10 py-2">
                     {f}
                   </li>
                 ))}
@@ -37,11 +37,11 @@ export function PricingRows({ detailed }: { detailed?: boolean }) {
 
 export function Pricing() {
   return (
-    <section id="pricing" aria-labelledby="pricing-heading" className="border-t border-night/15">
+    <section id="pricing" aria-labelledby="pricing-heading" className="border-t border-fg/15">
       <Container className="py-24 sm:py-32">
         <SectionLabel index="05">Pricing</SectionLabel>
         <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
-          <h2 id="pricing-heading" className="max-w-3xl text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none">
+          <h2 id="pricing-heading" className="max-w-3xl text-[clamp(2.25rem,5vw,4rem)] leading-none">
             Prices on the page
           </h2>
           <Link href="/pricing" className="u-link group inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold">
@@ -51,7 +51,7 @@ export function Pricing() {
         <div className="mt-14">
           <PricingRows />
         </div>
-        <p className="mt-6 max-w-[60ch] text-night/70">{pricingNote}</p>
+        <p className="mt-6 max-w-[60ch] text-fg/70">{pricingNote}</p>
       </Container>
     </section>
   );

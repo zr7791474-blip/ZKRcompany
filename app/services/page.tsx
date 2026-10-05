@@ -18,7 +18,7 @@ export default function ServicesPage() {
         title="What I do."
         description="Four areas, handled by one person. You talk to me from the first call to deployment."
       />
-      <Container className="py-16 sm:py-24">
+      <Container surface className="py-16 sm:py-24">
         <ServiceRows headingLevel="h2" />
         <div className="mt-16">
           <ButtonLink href="/contact">Start a project</ButtonLink>
