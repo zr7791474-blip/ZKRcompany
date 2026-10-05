@@ -43,7 +43,8 @@ export const metadata: Metadata = {
     // The share image comes from app/opengraph-image.tsx (and work/[slug]/opengraph-image.tsx).
   },
   twitter: { card: "summary_large_image", site: site.twitterHandle, title: site.identity, description },
-  icons: { icon: "/zkr.jpg", apple: "/zkr.jpg" },
+  // Icons come from the file conventions in /app (favicon.ico, icon.png, apple-icon.png), all derived from the ZKR logo.
+  // No manual `icons` entry: it would duplicate / conflict with them.
   // Tells the browser UI (address bar, scrollbars) which colour scheme the page supports.
   other: { "color-scheme": "dark light" },
   robots: { index: true, follow: true },

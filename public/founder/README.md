@@ -1,10 +1,7 @@
-# Founder portrait (optional)
+# Founder portrait
 
-Add a real photo as:
+`portrait.webp` is the portrait shown on the homepage About section and on /about (800 × 1000 px, 4:5, WebP).
 
-```
-public/founder/portrait.webp
-```
-
-Recommended: 800 × 1000 px (4:5), under ~150 KB. `.avif/.jpg/.png` with the same name also work.
-Until it exists, the homepage and /about show a clean labelled photo frame.
+To replace it, overwrite `public/founder/portrait.webp` with another 4:5 image (about 800 × 1000 px, under ~150 KB).
+`.avif/.jpg/.jpeg/.png` with the same base name also work. If the file is ever removed, a labelled
+"Photo coming soon" frame is shown instead (no avatar, no initials).
